@@ -1,14 +1,1 @@
-{  
-  "name": "crypto-annunciator-bot",
-  "version": "0.1.0",
-  "description": "",
-  "main": "src/bot.js",
-  "type": "module",
-  "scripts": {
-    "dev": "node src/bot.js"
-  },
-  "dependencies": {
-    "grammy": "^1.7.1",
-    "nconf": "^0.11.3"
-  }
-}
+{"name":"crypto-annunciator-bot","version":"0.1.0","description":"","main":"src/bot.js","type":"module","scripts":{"dev":"node src/bot.js"},"dependencies":{"grammy":"^1.7.1","nconf":"^0.11.3","node-fetch":"^3.2.3"}}
