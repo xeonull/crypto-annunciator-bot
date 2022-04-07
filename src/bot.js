@@ -1,8 +1,11 @@
 import { Bot } from "grammy";
 import nconf from "nconf";
-import { coingeckoApiPrice } from "./web.js";
+import { coingeckoApiPrice, coingeckoApiSearch } from "./web.js";
+import { get_coins, init_coins } from "./json.js";
 
 nconf.argv().env().file({ file: "config.json" });
+
+let coins = [];
 
 const bot = new Bot(nconf.get("telegramApiKey"));
 
@@ -23,12 +26,12 @@ bot.command("start", (ctx) => {
       inline_keyboard: [
         [
           {
-            text: "Search",
-            callback_data: "callback_search",
+            text: "My tickers",
+            callback_data: "callback_tickers",
           },
           {
             text: "Input",
-            callback_data: "callback_input",
+            callback_data: "callback_search",
           },
         ],
       ],
@@ -36,35 +39,35 @@ bot.command("start", (ctx) => {
   });
 });
 
-bot.callbackQuery("callback_input", async (ctx) => {
-  const price = await coingeckoApiPrice("polkadot");
-  ctx.reply(`Price: ${price}`);
+let coinKeyboard = [];
+
+bot.callbackQuery("callback_tickers", (ctx) => {
+  coins = get_coins();
+  const buttons = coins.map((c) => {
+    const b = {};
+    b.text = c.name;
+    b.callback_data = `cg_id_${c.cg_id}`;
+    return b;
+  });
+  coinKeyboard = [buttons]
+  ctx.reply("Tickers:", {
+    reply_markup: {
+      inline_keyboard: coinKeyboard,      
+    },
+  });
 });
 
-// bot.command("ticker", (ctx) =>
-//   ctx.reply("---", {
-//     text: "Please give us your phone number",
-//     reply_markup: JSON.stringify({
-//       keyboard: [
-//         [
-//           {
-//             text: "Share my phone number",
-//             request_contact: true,
-//           },
-//         ],
-//       ],
-//       resize_keyboard: true,
-//       one_time_keyboard: true,
-//     }),
-//   })
-// );
+bot.callbackQuery("callback_search", (ctx) => {
+  const res_coins = await coingeckoApiSearch("polkadot");
+  console.log("res_coins:", res_coins);
+});
 
-// bot.on("message", (ctx) =>
-//   ctx.api.sendMessage(ctx.message.chat.id, "Some text...", {
-//     reply_markup: JSON.stringify({
-//       hide_keyboard: true,
-//     }),
-//   })
-// );
+bot.on("callback_query:data", async (ctx) => {
+  if (ctx.update.callback_query.data.substring(0, 6) == 'cg_id_')
+  {
+    const price = await coingeckoApiPrice(ctx.update.callback_query.data.substring(6));
+    ctx.reply(`Price: ${price}`);
+  }
+});
 
 bot.start();
