@@ -4,6 +4,7 @@
 config.json
 
 package-lock.json
+dev.db*
 
 # Logs
 logs

@@ -1,0 +1,34 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Coin {
+  id     Int        @id @default(autoincrement())
+  cg_id  String     @unique
+  name   String
+  symbol String?
+  users  UserCoin[]
+}
+
+model User {
+  id         Int        @id @default(autoincrement())
+  t_id       Int        @unique
+  username   String?
+  first_name String?
+  last_name  String?
+  createdAt  DateTime   @default(now())
+  coins      UserCoin[]
+}
+
+model UserCoin {
+  id      Int  @id @default(autoincrement())
+  user    User @relation(fields: [user_id], references: [id])
+  user_id Int
+  coin    Coin @relation(fields: [coin_id], references: [id])
+  coin_id Int
+}

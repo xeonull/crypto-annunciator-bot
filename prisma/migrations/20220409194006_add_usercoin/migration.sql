@@ -1,0 +1,8 @@
+-- CreateTable
+CREATE TABLE "UserCoin" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER NOT NULL,
+    "coin_id" INTEGER NOT NULL,
+    CONSTRAINT "UserCoin_coin_id_fkey" FOREIGN KEY ("coin_id") REFERENCES "Coin" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "UserCoin_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);

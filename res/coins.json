@@ -1,1 +1,5 @@
-[{"cg_id":"avalanche-2","name":"Avalanche","symbol":"AVAX"},{"cg_id":"cosmos","name":"Cosmos","symbol":"ATOM"},{"cg_id":"near","name":"NEAR","symbol":"NEAR"}]
+[
+  { "cg_id": "avalanche-2", "name": "Avalanche", "symbol": "AVAX" },
+  { "cg_id": "cosmos", "name": "Cosmos", "symbol": "ATOM" },
+  { "cg_id": "near", "name": "NEAR", "symbol": "NEAR" }
+]

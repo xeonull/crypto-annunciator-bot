@@ -2,6 +2,7 @@ import { Bot } from "grammy";
 import nconf from "nconf";
 import { coingeckoApiPrice, coingeckoApiSearch } from "./web.js";
 import { get_coins, init_coins } from "./json.js";
+import {GetAllCoins, AddUser} from "../prisma/model.js";
 
 nconf.argv().env().file({ file: "config.json" });
 
@@ -20,8 +21,10 @@ bot.api.setMyCommands([
   // },
 ]);
 
-bot.command("start", (ctx) => {
-  ctx.reply("Welcome to the Crypto Annunciator Bot", {
+bot.command("start", async (ctx) => {
+  const u = await AddUser(ctx.chat.id, ctx.chat.username, ctx.chat.first_name, ctx.chat.last_name)
+  const hello_text = u.username ? `Hi, ${u.username}. ` : ``
+  ctx.reply(`${hello_text}Welcome to the Crypto Annunciator Bot`, {
     reply_markup: {
       inline_keyboard: [
         [
@@ -41,8 +44,10 @@ bot.command("start", (ctx) => {
 
 let coinKeyboard = [];
 
-bot.callbackQuery("callback_tickers", (ctx) => {
-  coins = get_coins();
+bot.callbackQuery("callback_tickers", async (ctx) => {
+  
+  coins = await GetAllCoins()
+  
   const buttons = coins.map((c) => {
     const b = {};
     b.text = c.name;
@@ -57,7 +62,7 @@ bot.callbackQuery("callback_tickers", (ctx) => {
   });
 });
 
-bot.callbackQuery("callback_search", (ctx) => {
+bot.callbackQuery("callback_search", async (ctx) => {
   const res_coins = await coingeckoApiSearch("polkadot");
   console.log("res_coins:", res_coins);
 });
