@@ -27,8 +27,8 @@ export const coingeckoApiSearch = async (searchString) => {
       throw new Error("Bad response from server");
     }
     const data = await response.json();
-    console.log(`Response data coins: ${JSON.stringify(data[coins])}`);
-    return data[coins].filter((t) => t?.market_cap_rank != null);
+    console.log(`Response data coins: ${JSON.stringify(data.coins)}`);
+    return data.coins.filter((t) => t?.market_cap_rank != null);
   } catch (e) {
     console.error("[coingeckoApiSearch Error]:", e);
   }
