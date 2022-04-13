@@ -21,14 +21,31 @@ model User {
   username   String?
   first_name String?
   last_name  String?
-  createdAt  DateTime   @default(now())
+  created_at DateTime   @default(now())
   coins      UserCoin[]
 }
 
 model UserCoin {
-  id      Int  @id @default(autoincrement())
-  user    User @relation(fields: [user_id], references: [id])
+  id      Int              @id @default(autoincrement())
+  user    User             @relation(fields: [user_id], references: [id])
   user_id Int
-  coin    Coin @relation(fields: [coin_id], references: [id])
+  coin    Coin             @relation(fields: [coin_id], references: [id])
   coin_id Int
+  actions UserCoinAction[]
+}
+
+model Action {
+  id        Int              @id @default(autoincrement())
+  name      String           @unique
+  usercoins UserCoinAction[]
+}
+
+model UserCoinAction {
+  id          Int      @id @default(autoincrement())
+  usercoin    UserCoin @relation(fields: [usercoin_id], references: [id])
+  usercoin_id Int
+  action      Action   @relation(fields: [action_id], references: [id])
+  action_id   Int
+  is_active   Boolean
+  limit_value Float
 }
