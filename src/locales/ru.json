@@ -1,0 +1,39 @@
+{
+  "scenes": {
+    "start": {
+      "welcome_back": "Привет, ${username}\n\nДобро пожаловать в Crypto Annunciator Bot",
+      "bot_description": "Бот для крптоуведомлений"
+    },
+    "about": {
+      "main": ""
+    },
+    "coins": {
+      "chosen_coin": "Выбранный жетон: ${coin}",
+      "list_of_coins": "Вот список твоих жетонов",
+      "back_button": "◀️ Назад",
+      "delete_button": "❌ Удалить"
+    },
+    "contact": {
+      "write_to_the_creator": "Отправь сообщение",
+      "message_delivered": "Твое сообщение было доставлено!"
+    }
+  },
+  "shared": {
+    "what_next": "✋ Ну привет! Чем могу помочь?",
+    "something_went_wrong": "❌ Ошибка"
+  },
+  "keyboards": {
+    "back_keyboard": {
+      "back": "◀ назад"
+    },
+    "main_keyboard": {
+      "search": "__поиск",
+      "coins": "__мои_коины",
+      "settings": "__настройки",
+      "about": "__обо_мне"
+    }
+  },
+  "other": {
+    "limit_has_been_reached": ""
+  }
+}

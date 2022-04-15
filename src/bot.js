@@ -1,65 +1,61 @@
-import { Bot, session } from "grammy";
 import nconf from "nconf";
-import { coingeckoApiPrice, coingeckoApiSearch } from "./web.js";
-import { GetAllCoins, AddUser, AddCoin } from "../prisma/model.js";
+//import fs from 'fs';
+import { fileURLToPath } from "url";
+import path, { dirname } from "path";
+import { coingeckoApiPrice, coingeckoApiSearch } from "./utils/web.js";
+import { GetAllCoins, AddCoin } from "../prisma/model.js";
+import asyncWrapper from "./utils/error-handlers.js";
+import { getUserInfo } from "./middlewares/user-info.js";
+import Telegraf from "telegraf";
+import TelegrafI18n from "telegraf-i18n";
+import startScene from "./controllers/start/index.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const { session, Stage } = Telegraf;
+const { match } = TelegrafI18n;
 
 nconf.argv().env().file({ file: "config.json" });
 
-const bot = new Bot(nconf.get("telegramApiKey"));
+const bot = new Telegraf(nconf.get("telegramApiKey"));
 
-bot.use(
-  session({
-    initial() {
-      return { isSearch: false, searchResults: null, dbUser: null };
-    },
-  })
-);
+const stage = new Stage([startScene]);
 
-bot.api.setMyCommands([
+const i18n = new TelegrafI18n({
+  defaultLanguage: "en",
+  directory: path.resolve(__dirname, "locales"),
+  useSession: true,
+  allowMissing: false,
+  sessionName: "session",
+});
+
+bot.use(session());
+bot.use(i18n.middleware());
+bot.use(stage.middleware());
+bot.use(getUserInfo);
+
+bot.telegram.setMyCommands([
   {
     command: "start",
     description: "Start",
   },
 ]);
 
-bot.command("start", async (ctx) => {
-  ctx.session.user = await AddUser(
-    ctx.chat.id,
-    ctx.chat.username,
-    ctx.chat.first_name,
-    ctx.chat.last_name
-  );
-  ctx.session.isSearch = false;
-  const hello_text = ctx.chat.username ? `Hi, ${ctx.chat.username}. ` : ``;
-  ctx.reply(`${hello_text}Welcome to the Crypto Annunciator Bot`, {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          {
-            text: "My tickers",
-            callback_data: "callback_tickers",
-          },
-          {
-            text: "Input",
-            callback_data: "callback_search",
-          },
-        ],
-      ],
-    },
-  });
-});
+bot.start(asyncWrapper(async (ctx) => ctx.scene.enter("start")));
 
-bot.callbackQuery("callback_tickers", async (ctx) => {  
-  ctx.editMessageReplyMarkup(
-    {
-      reply_markup: {
-        inline_keyboard: [
-          [
-          ],
-        ],
-      },
-    }
-  );
+bot.hears(
+  match("keyboards.main_keyboard.coins"),
+  //updateUserTimestamp,
+  asyncWrapper(async (ctx) => await ctx.scene.enter("coins"))
+);
+
+bot.action("callback_tickers", async (ctx) => {
+  // ctx.editMessageReplyMarkup({
+  //   reply_markup: {
+  //     inline_keyboard: [[]],
+  //   },
+  // });
 
   const coins = await GetAllCoins();
 
@@ -70,14 +66,14 @@ bot.callbackQuery("callback_tickers", async (ctx) => {
     return b;
   });
   const coinKeyboard = [buttons];
-  ctx.reply("Tickers:", {
+  ctx.reply("Your coins:", {
     reply_markup: {
       inline_keyboard: coinKeyboard,
     },
   });
 });
 
-bot.callbackQuery("callback_search", (ctx) => {
+bot.action("callback_search", (ctx) => {
   ctx.session.isSearch = true;
   ctx.reply(`Enter the name of the crypto asset to search:`);
 });
@@ -122,4 +118,4 @@ bot.on("callback_query:data", async (ctx) => {
   }
 });
 
-bot.start();
+bot.startPolling();

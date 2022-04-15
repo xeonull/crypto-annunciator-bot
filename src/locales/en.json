@@ -1,0 +1,40 @@
+{
+  "scenes": {
+    "start": {
+      "welcome_back": "Hi, ${username}\n\nWelcome to the Crypto Annunciator Bot",
+      "bot_description": "__its a bot for crypto notifications",
+      "zyx": "___<b>🔻✍️ vvv\n\n-rrr-e</b>eri"
+    },
+    "about": {
+      "main": ""
+    },
+    "coins": {
+      "chosen_coin": "You've chosen coin: ${coin}",
+      "list_of_coins": "This is list of your coins",
+      "back_button": "◀️ Back",
+      "delete_button": "❌ Delete"
+    },
+    "contact": {
+      "write_to_the_creator": "Leave a message",
+      "message_delivered": "Your message has been delivered!"
+    }
+  },
+  "shared": {
+    "what_next": "__select actions",
+    "something_went_wrong": "❌ Something went wrong. Try one more time.."
+  },
+  "keyboards": {
+    "back_keyboard": {
+      "back": "◀ back"
+    },
+    "main_keyboard": {
+      "search": "__search",
+      "coins": "__my_coins",
+      "settings": "__settings",
+      "about": "__about"
+    }
+  },
+  "other": {
+    "limit_has_been_reached": ""
+  }
+}
