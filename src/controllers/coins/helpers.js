@@ -1,47 +1,19 @@
 import pkg from 'telegraf';
-const { Extra } = pkg;
 
-/**
- * Displays menu with a list of movies
- * @param movies - list of movies
- */
-/**
- * Returns language keyboard
- */
-export function getLanguageKeyboard() {
-  return Extra.HTML().markup((markup) =>
-    markup.inlineKeyboard(
+export function getCoinControlMenu(ctx) {
+  return Extra.HTML().markup((m) =>
+    m.inlineKeyboard(
       [
-        markup.callbackButton(
-          `English`,
-          JSON.stringify({ a: "languageChange", p: "en" }),
+        m.callbackButton(
+          ctx.i18n.t('scenes.coins.back_button'),
+          JSON.stringify({ a: 'back', p: undefined }),
           false
         ),
-        markup.callbackButton(
-          `Русский`,
-          JSON.stringify({ a: "languageChange", p: "ru" }),
+        m.callbackButton(
+          ctx.i18n.t('scenes.coins.delete_button'),
+          JSON.stringify({ a: 'delete', p: ctx.coin._id }),
           false
-        ),
-      ],
-      {}
-    )
-  );
-}
-
-/**
- * Returns button that user has to click to start working with the bot
- */
-export function getAccountConfirmKeyboard(ctx) {
-  return Extra.HTML().markup((markup) =>
-    markup.inlineKeyboard(
-      [
-        markup.callbackButton(
-          "Letssssssssssssssss gog"
-          //ctx.i18n.t("scenes.start.lets_go")
-          ,
-          JSON.stringify({ a: "confirmAccount" }),
-          false
-        ),
+        )
       ],
       {}
     )

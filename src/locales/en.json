@@ -3,16 +3,26 @@
     "start": {
       "welcome_back": "Hi, ${username}\n\nWelcome to the Crypto Annunciator Bot",
       "bot_description": "__its a bot for crypto notifications",
+      "language_selected":"selected English",
       "zyx": "___<b>🔻✍️ vvv\n\n-rrr-e</b>eri"
+    },
+    "search": {
+      "before_search_message": "Enter the name of the crypto asset to search:",
+      "no_results_found": "No cryptos were found",
+      "founded_results": "Results:",
+      "coin_added": "${coin} added to your list\n\nTicker: ${ticker}",
+      "coin_already_added": "The ${coin} (${ticker}) already exists in the list"
     },
     "about": {
       "main": ""
     },
     "coins": {
       "chosen_coin": "You've chosen coin: ${coin}",
-      "list_of_coins": "This is list of your coins",
-      "back_button": "◀️ Back",
-      "delete_button": "❌ Delete"
+      "list_of_coins": "This is list of your coins:",
+      "back_button": "< back",
+      "delete_button": "delete",
+      "add_action": "Click to one of your coins to follow him",
+      "price": "${ticker} price: ${price}"
     },
     "contact": {
       "write_to_the_creator": "Leave a message",
@@ -20,18 +30,18 @@
     }
   },
   "shared": {
-    "what_next": "__select actions",
+    "what_next": "What do we do?",
     "something_went_wrong": "❌ Something went wrong. Try one more time.."
   },
   "keyboards": {
     "back_keyboard": {
-      "back": "◀ back"
+      "back": "< back"
     },
     "main_keyboard": {
-      "search": "__search",
-      "coins": "__my_coins",
-      "settings": "__settings",
-      "about": "__about"
+      "search": "> search",
+      "coins": "> my coins",
+      "settings": "> settings",
+      "about": "> about"
     }
   },
   "other": {

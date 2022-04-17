@@ -28,12 +28,14 @@ model User {
 }
 
 model UserCoin {
-  id      Int              @id @default(autoincrement())
-  user    User             @relation(fields: [user_id], references: [id])
-  user_id Int
-  coin    Coin             @relation(fields: [coin_id], references: [id])
-  coin_id Int
-  actions UserCoinAction[]
+  id         Int              @id @default(autoincrement())
+  user       User             @relation(fields: [user_id], references: [id])
+  user_id    Int
+  coin       Coin             @relation(fields: [coin_id], references: [id])
+  coin_id    Int
+  is_removed Boolean
+  updated_at DateTime         @default(now())
+  actions    UserCoinAction[]
 }
 
 model Action {
@@ -49,5 +51,6 @@ model UserCoinAction {
   action      Action   @relation(fields: [action_id], references: [id])
   action_id   Int
   is_active   Boolean
+  updated_at  DateTime @default(now())
   limit_value Float
 }

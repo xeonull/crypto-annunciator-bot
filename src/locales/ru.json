@@ -2,16 +2,26 @@
   "scenes": {
     "start": {
       "welcome_back": "Привет, ${username}\n\nДобро пожаловать в Crypto Annunciator Bot",
-      "bot_description": "Бот для крптоуведомлений"
+      "bot_description": "Бот для крптоуведомлений",
+      "language_selected":"Выбран Русский язык"
+    },
+    "search": {
+      "before_search_message": "Введите название крптоактива для поиска:",
+      "no_results_found": "Ничего не найдено",
+      "founded_results": "Результаты:",
+      "coin_added": "${coin} добавлен в твой список\n\nСимвол: ${ticker}",
+      "coin_already_added": "${coin} (${ticker}) уже имеется в списке"
     },
     "about": {
       "main": ""
     },
     "coins": {
       "chosen_coin": "Выбранный жетон: ${coin}",
-      "list_of_coins": "Вот список твоих жетонов",
-      "back_button": "◀️ Назад",
-      "delete_button": "❌ Удалить"
+      "list_of_coins": "Вот список твоих жетонов:",
+      "back_button": "< назад",
+      "delete_button": "удалить",
+      "add_action": "Выбери один из жетонов, чтобы следить за ним",
+      "price": "${ticker} цена: ${price}"
     },
     "contact": {
       "write_to_the_creator": "Отправь сообщение",
@@ -19,18 +29,18 @@
     }
   },
   "shared": {
-    "what_next": "✋ Ну привет! Чем могу помочь?",
+    "what_next": "Что будем делать?",
     "something_went_wrong": "❌ Ошибка"
   },
   "keyboards": {
     "back_keyboard": {
-      "back": "◀ назад"
+      "back": "< назад"
     },
     "main_keyboard": {
-      "search": "__поиск",
-      "coins": "__мои_коины",
-      "settings": "__настройки",
-      "about": "__обо_мне"
+      "search": "> поиск",
+      "coins": "> мои жетоны",
+      "settings": "> настройки",
+      "about": "> обо мне"
     }
   },
   "other": {
