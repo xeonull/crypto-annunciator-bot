@@ -10,6 +10,7 @@ const { leave } = Telegraf.Stage
 const start = new Telegraf.BaseScene('start')
 
 start.enter(async (ctx) => {
+  logger.debug(ctx, 'Enter start scene')
   if (!ctx.session.user_id) {
     const user = await UserInit(ctx.chat.id, ctx.chat.username, ctx.chat.first_name, ctx.chat.last_name, ctx.i18n.languageCode)
     saveToSession(ctx, 'user_id', user.id)
@@ -35,6 +36,7 @@ start.action(/languageChange/, async (ctx) => {
 })
 
 start.leave(async (ctx) => {
+  logger.debug(ctx, 'Leaves start scene')
   await ctx.reply(
     ctx.i18n.t('scenes.start.welcome_back', {
       username: ctx.chat.username,

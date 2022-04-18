@@ -20,7 +20,7 @@
       "list_of_coins": "Вот список твоих жетонов:",
       "back_button": "< назад",
       "delete_button": "удалить",
-      "add_action": "Выбери один из жетонов, чтобы следить за ним",
+      "choose_coin": "Выбери один из жетонов, чтобы следить за ним",
       "price": "${ticker} цена: ${price}"
     },
     "contact": {
@@ -30,11 +30,17 @@
   },
   "shared": {
     "what_next": "Что будем делать?",
+    "need_start": "Введите команду /start",
     "something_went_wrong": "❌ Ошибка"
   },
   "keyboards": {
     "back_keyboard": {
       "back": "< назад"
+    },
+    "coin_keyboard": {
+      "actions": "> действия",
+      "delete": "> удалить из списка",
+      "back": "< назад к списку жетонов"
     },
     "main_keyboard": {
       "search": "> поиск",

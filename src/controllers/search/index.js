@@ -1,90 +1,90 @@
-import { getMainKeyboard, getBackKeyboard } from '../../utils/keyboards.js'
-import { getCoinMenu } from '../../utils/menus.js'
-import { saveToSession, deleteFromSession } from '../../utils/session.js'
-import { coingeckoApiSearch } from '../../utils/web.js'
-import logger from '../../utils/logger.js'
-import Telegraf from 'telegraf'
-import { CoinAdd, UserCoinAddFindFirst, UserCoinAdd, UserCoinRestore } from '../../../prisma/model.js'
-import TelegrafI18n from 'telegraf-i18n'
+import { getMainKeyboard, getBackKeyboard } from "../../utils/keyboards.js";
+import { getCoinMenu } from "../../utils/menus.js";
+import { saveToSession, deleteFromSession } from "../../utils/session.js";
+import { coingeckoApiSearch } from "../../utils/web.js";
+import logger from "../../utils/logger.js";
+import Telegraf from "telegraf";
+import { CoinAdd, UserCoinAddFindFirst, UserCoinAdd, UserCoinRestore } from "../../../prisma/model.js";
+import TelegrafI18n from "telegraf-i18n";
 
-const { match } = TelegrafI18n
-const { leave } = Telegraf.Stage
-const search = new Telegraf.BaseScene('search')
+const { match } = TelegrafI18n;
+const { leave } = Telegraf.Stage;
+const search = new Telegraf.BaseScene("search");
 
 search.enter(async (ctx) => {
-  logger.debug(ctx, 'Enter search scene')
-  const { backKeyboard } = getBackKeyboard(ctx)
-  await ctx.replyWithHTML(ctx.i18n.t('scenes.search.before_search_message'), backKeyboard)
-})
+  logger.debug(ctx, "Enter search scene");
+  const { backKeyboard } = getBackKeyboard(ctx);
+  await ctx.replyWithHTML(ctx.i18n.t("scenes.search.before_search_message"), backKeyboard);
+});
 
-search.command('saveme', leave())
-search.hears(match('keyboards.back_keyboard.back'), leave())
+search.command("saveme", leave());
+search.hears(match("keyboards.back_keyboard.back"), leave());
 
-search.on('text', async (ctx) => {
+search.on("text", async (ctx) => {
   //deleteFromSession(ctx, 'movies');
 
-  logger.debug(ctx, 'Searching for "%s"', ctx.message.text)
+  logger.debug(ctx, 'Searching for "%s"', ctx.message.text);
   try {
-    const results = await coingeckoApiSearch(ctx.message.text)
+    const results = await coingeckoApiSearch(ctx.message.text);
 
-    if (!results || !results.length) return ctx.reply(ctx.i18n.t('scenes.search.no_results_found'))
+    if (!results || !results.length) return ctx.reply(ctx.i18n.t("scenes.search.no_results_found"));
     else {
       //const findKeyboard = buttons.slice(0, 3)
-      saveToSession(ctx, 'coins', results)
-      ctx.reply(ctx.i18n.t('scenes.search.founded_results'), getCoinMenu(results))
+      saveToSession(ctx, "coins", results);
+      ctx.reply(ctx.i18n.t("scenes.search.founded_results"), getCoinMenu(results));
     }
   } catch (e) {
-    logger.error(ctx, 'Search failed with the error: %O', e)
+    logger.error(ctx, "Search failed with the error: %O", e);
   }
-})
+});
 
 search.action(/coin/, async (ctx) => {
   try {
-    const selected_coin = JSON.parse(ctx.callbackQuery.data)
+    const selected_coin = JSON.parse(ctx.callbackQuery.data);
     if (ctx.session.coins) {
-      ctx.coin = ctx.session.coins.find((c) => c.id === selected_coin.p)
-      logger.debug(ctx, 'User is adding coin %O to own list', ctx.coin.id)
+      ctx.coin = ctx.session.coins.find((c) => c.id === selected_coin.p);
+      logger.debug(ctx, "User is adding coin %O to own list", ctx.coin.id);
 
-      const added_coin = await CoinAdd(ctx.coin.id, ctx.coin.name, ctx.coin.symbol)
+      const added_coin = await CoinAdd(ctx.coin.id, ctx.coin.name, ctx.coin.symbol);
 
-      const user_coin = await UserCoinAddFindFirst(ctx.session.user_id, added_coin.id)
+      const user_coin = await UserCoinAddFindFirst(ctx.session.user_id, added_coin.id);
 
       if (!user_coin) {
-        await UserCoinAdd(ctx.session.user_id, added_coin.id)
+        await UserCoinAdd(ctx.session.user_id, added_coin.id);
         ctx.editMessageText(
-          ctx.i18n.t('scenes.search.coin_added', {
+          ctx.i18n.t("scenes.search.coin_added", {
             coin: added_coin.name,
             ticker: added_coin.symbol,
           })
-        )
+        );
       } else if (user_coin.is_removed) {
-        await UserCoinRestore(user_coin.id)
+        await UserCoinRestore(user_coin.id);
         ctx.editMessageText(
-          ctx.i18n.t('scenes.search.coin_added', {
+          ctx.i18n.t("scenes.search.coin_added", {
             coin: added_coin.name,
             ticker: added_coin.symbol,
           })
-        )
+        );
       } else
         ctx.editMessageText(
-          ctx.i18n.t('scenes.search.coin_already_added', {
+          ctx.i18n.t("scenes.search.coin_already_added", {
             coin: added_coin.name,
             ticker: added_coin.symbol,
           })
-        )
+        );
     }
   } catch (e) {
-    logger.error(ctx, 'Choosing coin failed with the error: %O', e)
+    logger.error(ctx, "Choosing coin failed with the error: %O", e);
   }
-  await ctx.answerCbQuery()
-  ctx.scene.leave()
-})
+  await ctx.answerCbQuery();
+  ctx.scene.leave();
+});
 
 search.leave(async (ctx) => {
-  logger.debug(ctx, 'Leaves search scene')
-  const { mainKeyboard } = getMainKeyboard(ctx)
-  deleteFromSession(ctx, 'coins')
-  await ctx.reply(ctx.i18n.t('shared.what_next'), mainKeyboard)
-})
+  logger.debug(ctx, "Leaves search scene");
+  const { mainKeyboard } = getMainKeyboard(ctx);
+  deleteFromSession(ctx, "coins");
+  await ctx.reply(ctx.i18n.t("shared.what_next"), mainKeyboard);
+});
 
-export default search
+export default search;

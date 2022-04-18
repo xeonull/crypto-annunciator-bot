@@ -1,21 +1,23 @@
-import pkg from 'telegraf';
+import {  getBackKeyboard } from "../../utils/keyboards.js";
+import pkg from "telegraf";
+const { Markup } = pkg;
 
-export function getCoinControlMenu(ctx) {
-  return Extra.HTML().markup((m) =>
-    m.inlineKeyboard(
-      [
-        m.callbackButton(
-          ctx.i18n.t('scenes.coins.back_button'),
-          JSON.stringify({ a: 'back', p: undefined }),
-          false
-        ),
-        m.callbackButton(
-          ctx.i18n.t('scenes.coins.delete_button'),
-          JSON.stringify({ a: 'delete', p: ctx.coin._id }),
-          false
-        )
-      ],
-      {}
-    )
-  );
-}
+/* Returns back keyboard and its buttons according to the language */
+export const getCoinControlKeyboard = (ctx) => {
+  const coinKeyboardAction = ctx.i18n.t("keyboards.coin_keyboard.actions");
+  const coinKeyboardDelete = ctx.i18n.t("keyboards.coin_keyboard.delete");
+  const coinKeyboardBack = ctx.i18n.t("keyboards.coin_keyboard.back");
+  let coinKeyboard = Markup.keyboard([[coinKeyboardAction, coinKeyboardDelete], [coinKeyboardBack]]);
+
+  coinKeyboard = coinKeyboard.resize().extra();
+
+  return {
+    coinKeyboard,
+    coinKeyboardAction,
+    coinKeyboardDelete,
+    coinKeyboardBack
+  };
+};
+
+export const ggg = (ctx) => {
+};
