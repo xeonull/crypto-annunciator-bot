@@ -1,9 +1,7 @@
 import { getMainKeyboard, getBackKeyboard } from "../../utils/keyboards.js";
 import { exposeCoin } from "./middlewares.js";
-import { getCoinControlKeyboard } from "./helpers.js";
 import { getCoinMenu } from "../../utils/menus.js";
 import { saveToSession, deleteFromSession } from "../../utils/session.js";
-import { coingeckoApiPrice } from "../../utils/web.js";
 import logger from "../../utils/logger.js";
 import { UserCoinGet } from "../../../prisma/model.js";
 import Telegraf from "telegraf";
@@ -15,15 +13,15 @@ const coins = new Telegraf.BaseScene("coins");
 
 coins.enter(async (ctx) => {
   logger.debug(ctx, "Enter coins scene");
-  let coins = [];
+
   try {
-    coins = await UserCoinGet(ctx.session.user_id);
+    const coins = await UserCoinGet(ctx.session.user_id);
     saveToSession(ctx, "coins", coins);
+    await ctx.reply(ctx.i18n.t("scenes.coins.list_of_coins"), getCoinMenu(coins));
   } catch (e) {
     logger.error(ctx, "User coin list getting failed with the error: %O", e);
   }
 
-  await ctx.reply(ctx.i18n.t("scenes.coins.list_of_coins"), getCoinMenu(coins));
   const { backKeyboard } = getBackKeyboard(ctx);
   await ctx.reply(ctx.i18n.t("scenes.coins.choose_coin"), backKeyboard);
 });
@@ -31,36 +29,23 @@ coins.enter(async (ctx) => {
 coins.command("saveme", leave());
 coins.hears(match("keyboards.back_keyboard.back"), leave());
 
-coins.hears(match("keyboards.coin_keyboard.back"), async (ctx) => {
-  await ctx.reply(ctx.i18n.t("scenes.coins.list_of_coins"), getCoinMenu(ctx.session.coins));
-  const { backKeyboard } = getBackKeyboard(ctx);
-  await ctx.reply(ctx.i18n.t("scenes.coins.choose_coin"), backKeyboard);
-});
-
-coins.hears(match("keyboards.coin_keyboard.delete"), async (ctx) => {
-  await ctx.reply(ctx.i18n.t("scenes.coins.list_of_coins"), getCoinMenu(ctx.session.coins));
-  const { backKeyboard } = getBackKeyboard(ctx);
-  await ctx.reply(ctx.i18n.t("scenes.coins.choose_coin"), backKeyboard);
-});
-
 coins.action(/coin/, exposeCoin, async (ctx) => {
   try {
-    logger.debug(ctx, "User select coin %O to set action", ctx.coin.name);
-    const price = await coingeckoApiPrice(ctx.coin.cg_id);
-    const { coinKeyboard } = getCoinControlKeyboard(ctx);
-    ctx.reply(ctx.i18n.t("scenes.coins.price", { ticker: ctx.coin.symbol, price }), coinKeyboard);
+    logger.debug(ctx, "User select coin %O to set action", ctx.session.coin.name);
+    await ctx.answerCbQuery();
+    ctx.scene.enter("detail");
   } catch (e) {
     logger.error(ctx, "Choosing coin failed with the error: %O", e);
   }
-  // await ctx.answerCbQuery();
-  // ctx.scene.leave();
 });
 
 coins.leave(async (ctx) => {
   logger.debug(ctx, "Leaves coins scene");
-  const { mainKeyboard } = getMainKeyboard(ctx);
   deleteFromSession(ctx, "coins");
-  await ctx.reply(ctx.i18n.t("shared.what_next"), mainKeyboard);
+  if (!ctx.session.coin) {
+    const { mainKeyboard } = getMainKeyboard(ctx);
+    await ctx.reply(ctx.i18n.t("shared.what_next"), mainKeyboard);
+  }
 });
 
 export default coins;

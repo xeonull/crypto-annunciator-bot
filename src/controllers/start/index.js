@@ -1,6 +1,6 @@
 import { getLanguageKeyboard } from './helpers.js'
 import { getMainKeyboard } from '../../utils/keyboards.js'
-import { updateLanguage } from '../../utils/language.js'
+import { updateLanguage } from '../../utils/settings.js'
 import logger from '../../utils/logger.js'
 import Telegraf from 'telegraf'
 import { UserInit } from '../../../prisma/model.js'

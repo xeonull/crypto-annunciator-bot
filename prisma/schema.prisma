@@ -24,6 +24,7 @@ model User {
   created_at DateTime   @default(now())
   updated_at DateTime   @default(now())
   language   String?
+  currency   String     @default("usd")
   coins      UserCoin[]
 }
 
@@ -53,4 +54,5 @@ model UserCoinAction {
   is_active   Boolean
   updated_at  DateTime @default(now())
   limit_value Float
+  currency    String
 }

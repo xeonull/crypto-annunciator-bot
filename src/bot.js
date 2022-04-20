@@ -11,6 +11,8 @@ import TelegrafI18n from 'telegraf-i18n'
 import startScene from './controllers/start/index.js'
 import searchScene from './controllers/search/index.js'
 import coinsScene from './controllers/coins/index.js'
+import detailScene from './controllers/detail/index.js'
+import settingsScene from './controllers/settings/index.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -22,7 +24,7 @@ nconf.argv().env().file({ file: 'config.json' })
 
 const bot = new Telegraf(nconf.get('telegramApiKey'))
 
-const stage = new Stage([startScene, searchScene, coinsScene])
+const stage = new Stage([startScene, searchScene, coinsScene, detailScene, settingsScene])
 
 const i18n = new TelegrafI18n({
   defaultLanguage: 'en',
@@ -59,12 +61,18 @@ bot.hears(
 )
 
 bot.hears(
-  /< (.+)/i,
-  //match('keyboards.back_keyboard.back'),
+  match('keyboards.main_keyboard.settings'),
+  isUserExist,
+  asyncWrapper(async (ctx) => await ctx.scene.enter('settings'))
+)
+
+bot.hears(
+  ///< (.+)/i,
+  match('keyboards.back_keyboard.back'),
   asyncWrapper(async (ctx) => {
     // If this method was triggered, it means that bot was updated when user was not in the main menu..
     const { mainKeyboard } = getMainKeyboard(ctx);
-    await ctx.reply(ctx.i18n.t('shared.what_next'), mainKeyboard);
+    const xx = await ctx.reply(ctx.i18n.t('shared.what_next'), mainKeyboard);
   })
 );
 

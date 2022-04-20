@@ -1,17 +1,19 @@
 import fetch from "node-fetch";
 //https://www.coingecko.com/en/api/documentation
-export const coingeckoApiPrice = async (cryptoCurrency) => {
-  const vs_currency = "usd";
-  try {
+export const coingeckoApiPrice = async (cryptoCurrency, vsCurrency) => {
+   try {
     const response = await fetch(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoCurrency}&vs_currencies=${vs_currency}&include_market_cap=true`
+      `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoCurrency}&vs_currencies=${vsCurrency}&include_market_cap=true`
     );
     if (response.status >= 400) {
       throw new Error("Bad response from server");
     }
     const data = await response.json();
     console.log(`Response data price: ${JSON.stringify(data)}`);
-    return data[cryptoCurrency][vs_currency];
+    return {
+      price: data[cryptoCurrency][vsCurrency],
+      market_cap: data[cryptoCurrency][`${vsCurrency}_market_cap`]
+    }
   } catch (e) {
     console.error("[coingeckoApiPrice Error]:", e);
   }

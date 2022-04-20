@@ -18,10 +18,21 @@
     "coins": {
       "chosen_coin": "Выбранный жетон: ${coin}",
       "list_of_coins": "Вот список твоих жетонов:",
-      "back_button": "< назад",
-      "delete_button": "удалить",
-      "choose_coin": "Выбери один из жетонов, чтобы следить за ним",
-      "price": "${ticker} цена: ${price}"
+      "choose_coin": "Выбери один из своих жетонов"
+    },
+    "detail": {
+      "price": "${ticker} цена: ${price} ${vs}",
+      "price_market_cap": "${ticker} / ${vs}\n\nЦена: ${price}\nКапитализация: ${market_cap}"
+    },
+    "settings": {
+      "settings": "Настройки",
+      "selected": "Выбранный язык: ${language}\nВыбранная валюта: ${currency}",
+      "language": "Язык",
+      "pick_language": "Выбери язык",
+      "language_changed": "Язык был изменен на Русский",
+      "currency": "Валюта",
+      "pick_currency": "Выбери валюту",
+      "currency_changed": "Валюта была изменена на ${currency}"
     },
     "contact": {
       "write_to_the_creator": "Отправь сообщение",
@@ -35,18 +46,17 @@
   },
   "keyboards": {
     "back_keyboard": {
-      "back": "< назад"
+      "back": "‹ назад"
     },
-    "coin_keyboard": {
-      "actions": "> действия",
-      "delete": "> удалить из списка",
-      "back": "< назад к списку жетонов"
+    "coin_detail_keyboard": {
+      "tracking": "› отслеживание",
+      "delete": "› удалить из списка"
     },
     "main_keyboard": {
-      "search": "> поиск",
-      "coins": "> мои жетоны",
-      "settings": "> настройки",
-      "about": "> обо мне"
+      "search": "› поиск",
+      "coins": "› мои жетоны",
+      "settings": "› настройки",
+      "about": "› обо мне"
     }
   },
   "other": {

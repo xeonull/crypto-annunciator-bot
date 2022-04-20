@@ -3,8 +3,7 @@
     "start": {
       "welcome_back": "Hi, ${username}\n\nWelcome to the Crypto Annunciator Bot",
       "bot_description": "__its a bot for crypto notifications",
-      "language_selected":"selected English",
-      "zyx": "___<b>🔻✍️ vvv\n\n-rrr-e</b>eri"
+      "language_selected":"selected English"
     },
     "search": {
       "before_search_message": "Enter the name of the crypto asset to search:",
@@ -19,10 +18,21 @@
     "coins": {
       "chosen_coin": "You've chosen coin: ${coin}",
       "list_of_coins": "This is list of your coins:",
-      "back_button": "< back",
-      "delete_button": "delete",
-      "choose_coin": "Click to one of your coins to follow him",
-      "price": "${ticker} price: ${price}"
+      "choose_coin": "Select one of your coins"
+    },
+    "detail": {
+      "price": "${ticker} price: ${price} ${vs}",
+      "price_market_cap": "${ticker} / ${vs}\n\nPrice: ${price}\nCapitalization: ${market_cap}"
+    },
+    "settings": {
+      "settings": "Settings",
+      "selected": "Selected language: <b>${language}</b>\nSelected currency: <b>${currency}</b>",
+      "language": "Language",
+      "pick_language": "Pick language",
+      "language_changed": "Language has been changed to English",
+      "currency": "Currency",
+      "pick_currency": "Pick currency",
+      "currency_changed": "Currency has been changed to ${currency}"
     },
     "contact": {
       "write_to_the_creator": "Leave a message",
@@ -36,18 +46,17 @@
   },
   "keyboards": {
     "back_keyboard": {
-      "back": "< back"
+      "back": "‹ back"
     },
-    "coin_keyboard": {
-      "actions": "> actions",
-      "delete": "> delete coin from list",
-      "back": "< back to coin list"
+    "coin_detail_keyboard": {
+      "tracking": "› tracking",
+      "delete": "› delete coin from list"
     },
     "main_keyboard": {
-      "search": "> search",
-      "coins": "> my coins",
-      "settings": "> settings",
-      "about": "> about"
+      "search": "› search",
+      "coins": "› my coins",
+      "settings": "› settings",
+      "about": "› about"
     }
   },
   "other": {
