@@ -1,6 +1,6 @@
 import { getObjectMenu, getObjectMenuComplex } from "../../utils/menus.js";
 
-export const showSettingsMainMenu = async (ctx, is_edit = false) => {
+export const showSettingsMainMenu = (ctx, is_edit = false) => {
   const extra = getObjectMenu(
     [
       { id: "lang", name: ctx.i18n.t("scenes.settings.language") },
@@ -9,11 +9,11 @@ export const showSettingsMainMenu = async (ctx, is_edit = false) => {
     "settingSelected"
   );
   const text = ctx.i18n.t("scenes.settings.selected", { language: ctx.session.language.toUpperCase(), currency: ctx.session.currency.toUpperCase() });
-  is_edit ? await ctx.editMessageText(text, extra) : await ctx.reply(text, extra);
+  is_edit ? ctx.editMessageText(text, extra) : ctx.reply(text, extra);
 };
 
-export const showSettingsLanguageMenu = async (ctx) => {
-  await ctx.editMessageText(
+export const showSettingsLanguageMenu = (ctx) => {
+  ctx.editMessageText(
     ctx.i18n.t("scenes.settings.pick_language"),
     getObjectMenu(
       [
@@ -27,8 +27,8 @@ export const showSettingsLanguageMenu = async (ctx) => {
   );
 };
 
-export const showSettingsCurrencyMenu = async (ctx) => {
-  await ctx.editMessageText(
+export const showSettingsCurrencyMenu = (ctx) => {
+  ctx.editMessageText(
     ctx.i18n.t("scenes.settings.pick_currency"),
     getObjectMenuComplex(
       [
@@ -40,6 +40,7 @@ export const showSettingsCurrencyMenu = async (ctx) => {
         { id: "eth", name: "ETH" },
       ],
       "currencySelected",
+      3,
       true,
       ctx.i18n.t("keyboards.back_keyboard.back")
     )

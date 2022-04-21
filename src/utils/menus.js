@@ -11,6 +11,22 @@ export function getCoinMenu(coins) {
   );
 }
 
+export function getCoinMenuComplex(obj, col_count = 3) {
+  return Extra.HTML().markup((m) => {
+    const matrix = [];
+
+    let prev = 0;
+    for (let index = 1; index <= obj.length; index++) {
+      if (index % col_count === 0 || index === obj.length) {
+        matrix.push(obj.slice(prev, index).map((o) => m.callbackButton(`${o.name} (${o.symbol})`, JSON.stringify({ a: 'coin', p: o.id }), false)));
+        prev = index;
+      }
+    }
+
+    return m.inlineKeyboard(matrix, {});
+  });
+}
+
 /* Displays menu with a list of object with name and id fields */
 export function getObjectMenu(obj, action, is_back_button = false, back_button_text = "back") {
   return Extra.HTML().markup((m) =>
@@ -24,7 +40,7 @@ export function getObjectMenu(obj, action, is_back_button = false, back_button_t
   );
 }
 
-export function getObjectMenuComplex(obj, action, is_back_button = false, back_button_text = "back", col_count = 3) {
+export function getObjectMenuComplex(obj, action, col_count = 3, is_back_button = false, back_button_text = "back") {
   return Extra.HTML().markup((m) => {
     const matrix = [];
 

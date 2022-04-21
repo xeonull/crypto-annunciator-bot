@@ -22,11 +22,12 @@
     },
     "detail": {
       "price": "${ticker} цена: ${price} ${vs}",
-      "price_market_cap": "${ticker} / ${vs}\n\nЦена: ${price}\nКапитализация: ${market_cap}"
+      "price_market_cap": "${ticker} / ${vs}\n\nЦена: ${price}\nКапитализация: ${market_cap}",
+      "what_next": "Чтоб делаем с выбранным жетоном?"
     },
     "settings": {
       "settings": "Настройки",
-      "selected": "Выбранный язык: ${language}\nВыбранная валюта: ${currency}",
+      "selected": "Выбранный язык: <b>${language}</b>\nВыбранная валюта: <b>${currency}</b>",
       "language": "Язык",
       "pick_language": "Выбери язык",
       "language_changed": "Язык был изменен на Русский",

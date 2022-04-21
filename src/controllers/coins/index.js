@@ -1,6 +1,6 @@
 import { getMainKeyboard, getBackKeyboard } from "../../utils/keyboards.js";
 import { exposeCoin } from "./middlewares.js";
-import { getCoinMenu } from "../../utils/menus.js";
+import { getCoinMenuComplex } from "../../utils/menus.js";
 import { saveToSession, deleteFromSession } from "../../utils/session.js";
 import logger from "../../utils/logger.js";
 import { UserCoinGet } from "../../../prisma/model.js";
@@ -17,13 +17,14 @@ coins.enter(async (ctx) => {
   try {
     const coins = await UserCoinGet(ctx.session.user_id);
     saveToSession(ctx, "coins", coins);
-    await ctx.reply(ctx.i18n.t("scenes.coins.list_of_coins"), getCoinMenu(coins));
+    await ctx.reply(ctx.i18n.t("scenes.coins.list_of_coins"), getCoinMenuComplex(coins));
   } catch (e) {
     logger.error(ctx, "User coin list getting failed with the error: %O", e);
   }
 
   const { backKeyboard } = getBackKeyboard(ctx);
-  await ctx.reply(ctx.i18n.t("scenes.coins.choose_coin"), backKeyboard);
+  const message = await ctx.reply(ctx.i18n.t("scenes.coins.choose_coin"), backKeyboard);
+  saveToSession(ctx, "del_message_id", message.message_id);
 });
 
 coins.command("saveme", leave());
@@ -41,6 +42,10 @@ coins.action(/coin/, exposeCoin, async (ctx) => {
 
 coins.leave(async (ctx) => {
   logger.debug(ctx, "Leaves coins scene");
+  if (ctx.session.del_message_id) {
+    ctx.deleteMessage(ctx.session.del_message_id);
+    deleteFromSession(ctx, "del_message_id");
+  }
   deleteFromSession(ctx, "coins");
   if (!ctx.session.coin) {
     const { mainKeyboard } = getMainKeyboard(ctx);

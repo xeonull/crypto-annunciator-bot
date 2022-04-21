@@ -22,7 +22,8 @@
     },
     "detail": {
       "price": "${ticker} price: ${price} ${vs}",
-      "price_market_cap": "${ticker} / ${vs}\n\nPrice: ${price}\nCapitalization: ${market_cap}"
+      "price_market_cap": "${ticker} / ${vs}\n\nPrice: ${price}\nCapitalization: ${market_cap}",
+      "what_next": "What do we do with the selected coin?"
     },
     "settings": {
       "settings": "Settings",
