@@ -23,8 +23,8 @@ coins.enter(async (ctx) => {
   }
 
   const { backKeyboard } = getBackKeyboard(ctx);
-  const message = await ctx.reply(ctx.i18n.t("scenes.coins.choose_coin"), backKeyboard);
-  saveToSession(ctx, "del_message_id", message.message_id);
+  // const message = await ctx.reply(ctx.i18n.t("scenes.coins.choose_coin"), backKeyboard);
+  // saveToSession(ctx, "del_message_id", message.message_id);
 });
 
 coins.command("saveme", leave());
@@ -42,10 +42,10 @@ coins.action(/coin/, exposeCoin, async (ctx) => {
 
 coins.leave(async (ctx) => {
   logger.debug(ctx, "Leaves coins scene");
-  if (ctx.session.del_message_id) {
-    ctx.deleteMessage(ctx.session.del_message_id);
-    deleteFromSession(ctx, "del_message_id");
-  }
+  // if (ctx.session.del_message_id) {
+  //   ctx.deleteMessage(ctx.session.del_message_id);
+  //   deleteFromSession(ctx, "del_message_id");
+  // }
   deleteFromSession(ctx, "coins");
   if (!ctx.session.coin) {
     const { mainKeyboard } = getMainKeyboard(ctx);

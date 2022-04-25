@@ -23,7 +23,10 @@
     "detail": {
       "price": "${ticker} price: ${price} ${vs}",
       "price_market_cap": "${ticker} / ${vs}\n\nPrice: ${price}\nCapitalization: ${market_cap}",
-      "what_next": "What do we do with the selected coin?"
+      "what_next": "What do we do with the selected coin?",
+      "pick_notification_type": "_____",
+      "price_limit_up": "Price growth limit",
+      "price_limit_down": "Price drop limit"
     },
     "settings": {
       "settings": "Settings",
@@ -50,7 +53,7 @@
       "back": "‹ back"
     },
     "coin_detail_keyboard": {
-      "tracking": "› tracking",
+      "subscribe": "› tracking",
       "delete": "› delete coin from list"
     },
     "main_keyboard": {

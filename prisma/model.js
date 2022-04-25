@@ -110,3 +110,16 @@ export async function UserCoinGet(userId) {
     include: { users: { select: { id: true } } },
   });
 }
+
+export async function NotificationTypeAdd(name) {
+  return await prisma.notificationType.create({
+    data: { name },
+  });
+}
+
+export async function NotificationTypeGet() {
+  return await prisma.notificationType.findMany({
+    select: { id: true, name: true, is_removed: false },
+    where: { is_removed: false },
+  });
+}

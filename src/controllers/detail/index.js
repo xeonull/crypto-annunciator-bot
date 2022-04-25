@@ -1,6 +1,6 @@
 //import { getMainKeyboard, getBackKeyboard } from "../../utils/keyboards.js";
 //import { exposeCoin } from "./middlewares.js";
-import { getCoinControlKeyboard } from "./helpers.js";
+import { getCoinControlKeyboard, showSubsMenu } from "./helpers.js";
 //import { getCoinMenu } from "../../utils/menus.js";
 import { deleteFromSession } from "../../utils/session.js";
 import { coingeckoApiPrice } from "../../utils/web.js";
@@ -42,19 +42,21 @@ detail.hears(match("keyboards.back_keyboard.back"), (ctx) => {
 detail.hears(match("keyboards.coin_detail_keyboard.delete"), async (ctx) => {
   try {
     await UserCoinRemove(ctx.session.coin.users[0].id);
+    logger.debug(ctx, "Coin %s removed from user list", ctx.session.coin.symbol);
   } catch (e) {
     logger.error(ctx, "Removing coin from user list failed with the error: %O", e);
   }
   ctx.scene.enter("coins");
 });
 
-detail.hears(match("keyboards.coin_detail_keyboard.tracking"), async (ctx) => {
+detail.hears(match("keyboards.coin_detail_keyboard.subscribe"), async (ctx) => {
   try {
-    await UserCoinRemove(ctx.session.coin.users[0].id);
+    // const { backKeyboard } = getBackKeyboard(ctx);
+    // await ctx.reply(ctx.i18n.t("scenes.detail.pick_notification_type"), backKeyboard);
+    await showSubsMenu(ctx);
   } catch (e) {
     logger.error(ctx, "Removing coin from user list failed with the error: %O", e);
   }
-  ctx.scene.enter("coins");
 });
 
 detail.leave(async (ctx) => {

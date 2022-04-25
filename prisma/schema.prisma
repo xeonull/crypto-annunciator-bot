@@ -29,30 +29,31 @@ model User {
 }
 
 model UserCoin {
-  id         Int              @id @default(autoincrement())
-  user       User             @relation(fields: [user_id], references: [id])
+  id         Int            @id @default(autoincrement())
+  user       User           @relation(fields: [user_id], references: [id])
   user_id    Int
-  coin       Coin             @relation(fields: [coin_id], references: [id])
+  coin       Coin           @relation(fields: [coin_id], references: [id])
   coin_id    Int
   is_removed Boolean
-  updated_at DateTime         @default(now())
-  actions    UserCoinAction[]
+  updated_at DateTime       @default(now())
+  actions    Subscription[]
 }
 
-model Action {
-  id        Int              @id @default(autoincrement())
-  name      String           @unique
-  usercoins UserCoinAction[]
+model NotificationType {
+  id         Int            @id @default(autoincrement())
+  name       String         @unique
+  is_removed Boolean        @default(false)
+  usercoins  Subscription[]
 }
 
-model UserCoinAction {
-  id          Int      @id @default(autoincrement())
-  usercoin    UserCoin @relation(fields: [usercoin_id], references: [id])
-  usercoin_id Int
-  action      Action   @relation(fields: [action_id], references: [id])
-  action_id   Int
-  is_active   Boolean
-  updated_at  DateTime @default(now())
-  limit_value Float
-  currency    String
+model Subscription {
+  id                   Int              @id @default(autoincrement())
+  usercoin             UserCoin         @relation(fields: [usercoin_id], references: [id])
+  usercoin_id          Int
+  notification_type    NotificationType @relation(fields: [notification_type_id], references: [id])
+  notification_type_id Int
+  is_active            Boolean
+  updated_at           DateTime         @default(now())
+  limit_value          Float
+  currency             String
 }

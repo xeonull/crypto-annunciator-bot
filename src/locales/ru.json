@@ -23,7 +23,10 @@
     "detail": {
       "price": "${ticker} цена: ${price} ${vs}",
       "price_market_cap": "${ticker} / ${vs}\n\nЦена: ${price}\nКапитализация: ${market_cap}",
-      "what_next": "Чтоб делаем с выбранным жетоном?"
+      "what_next": "Чтоб делаем с выбранным жетоном?",
+      "pick_notification_type": "_____",
+      "price_limit_up": "Лимит роста цены",
+      "price_limit_down": "Лимит падения цены"
     },
     "settings": {
       "settings": "Настройки",
@@ -50,7 +53,7 @@
       "back": "‹ назад"
     },
     "coin_detail_keyboard": {
-      "tracking": "› отслеживание",
+      "subscribe": "› отслеживание",
       "delete": "› удалить из списка"
     },
     "main_keyboard": {
