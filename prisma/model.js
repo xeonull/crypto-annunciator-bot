@@ -79,14 +79,22 @@ export async function UserCoinAdd(userId, coinId) {
   });
 }
 
-export async function UserCoinAddFindFirst(userId, coinId) {
-  return await prisma.userCoin.findFirst({
-    where: {
-      user_id: userId,
-      coin_id: coinId,
-    },
-    take: 1,
-  });
+export async function UserCoinGet(userId, coinId) {
+  if (coinId) {
+    return await prisma.userCoin.findFirst({
+      where: {
+        user_id: userId,
+        coin_id: coinId,
+      },
+      take: 1,
+    });
+  } else {
+    return await prisma.coin.findMany({
+      where: { users: { some: { user_id: userId, is_removed: false } } },
+      orderBy: { name: "asc" },
+      include: { users: { select: { id: true } } },
+    });
+  }
 }
 
 export async function UserCoinRestore(userCoinId) {
@@ -103,23 +111,29 @@ export async function UserCoinRemove(userCoinId) {
   });
 }
 
-export async function UserCoinGet(userId) {
-  return await prisma.coin.findMany({
-    where: { users: { some: { user_id: userId, is_removed: false } } },
-    orderBy: { name: "asc" },
-    include: { users: { select: { id: true } } },
-  });
-}
-
 export async function NotificationTypeAdd(name) {
   return await prisma.notificationType.create({
     data: { name },
   });
 }
 
-export async function NotificationTypeGet() {
+export async function NotificationTypeGetAll() {
   return await prisma.notificationType.findMany({
     select: { id: true, name: true, is_removed: false },
     where: { is_removed: false },
+  });
+}
+
+export async function NotificationTypeGet(name) {
+  return await prisma.notificationType.findFirst({
+    select: { id: true, name: true, is_removed: false },
+    where: { is_removed: false, name },
+  });
+}
+
+export async function SubscriptionAdd(userCoinId, notificationTypeName, value, currency) {
+  const notificationType = await NotificationTypeGet(notificationTypeName);
+  return await prisma.subscription.create({
+    data: { usercoin_id: userCoinId, notification_type_id: notificationType.id, is_active: true, limit_value: value, currency },
   });
 }

@@ -3,7 +3,7 @@
     "start": {
       "welcome_back": "Hi, ${username}\n\nWelcome to the Crypto Annunciator Bot",
       "bot_description": "__its a bot for crypto notifications",
-      "language_selected":"selected English"
+      "language_selected": "selected English"
     },
     "search": {
       "before_search_message": "Enter the name of the crypto asset to search:",
@@ -16,15 +16,22 @@
       "main": ""
     },
     "coins": {
+      "info_count": "Count of coins: ${count}",
+      "info_empty": "The coin list is empty. Use '› search' to add",
       "chosen_coin": "You've chosen coin: ${coin}",
-      "list_of_coins": "This is list of your coins:",
-      "choose_coin": "Select one of your coins"
+      "list_of_coins": "This is list of your coins:"
     },
     "detail": {
+      "buttons": {
+        "subscribe": "subscibe",
+        "delete": "delete from list"
+      },
       "price": "${ticker} price: ${price} ${vs}",
       "price_market_cap": "${ticker} / ${vs}\n\nPrice: ${price}\nCapitalization: ${market_cap}",
       "what_next": "What do we do with the selected coin?",
       "pick_notification_type": "_____",
+      "pick_limit_value": "What value are we waiting for?",
+      "subcribe_success": "Subscription added successfully",
       "price_limit_up": "Price growth limit",
       "price_limit_down": "Price drop limit"
     },
@@ -51,10 +58,6 @@
   "keyboards": {
     "back_keyboard": {
       "back": "‹ back"
-    },
-    "coin_detail_keyboard": {
-      "subscribe": "› tracking",
-      "delete": "› delete coin from list"
     },
     "main_keyboard": {
       "search": "› search",

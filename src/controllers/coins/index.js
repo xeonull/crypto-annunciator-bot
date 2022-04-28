@@ -16,15 +16,22 @@ coins.enter(async (ctx) => {
 
   try {
     const coins = await UserCoinGet(ctx.session.user_id);
+
+    const { backKeyboard } = getBackKeyboard(ctx);
+    if (coins && coins.length) {
+      await ctx.reply(ctx.i18n.t("scenes.coins.info_count", { count: coins.length }), backKeyboard);
+    } else {
+      await ctx.reply(ctx.i18n.t("scenes.coins.info_empty"), backKeyboard);
+    }
+
     saveToSession(ctx, "coins", coins);
     await ctx.reply(ctx.i18n.t("scenes.coins.list_of_coins"), getCoinMenuComplex(coins));
   } catch (e) {
     logger.error(ctx, "User coin list getting failed with the error: %O", e);
   }
 
-  const { backKeyboard } = getBackKeyboard(ctx);
-  // const message = await ctx.reply(ctx.i18n.t("scenes.coins.choose_coin"), backKeyboard);
-  // saveToSession(ctx, "del_message_id", message.message_id);
+  //const message = await ctx.reply(ctx.i18n.t("scenes.coins.choose_coin"), backKeyboard);
+  //saveToSession(ctx, "del_message_id", message.message_id);
 });
 
 coins.command("saveme", leave());

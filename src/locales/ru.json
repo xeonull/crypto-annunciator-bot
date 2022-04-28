@@ -3,7 +3,7 @@
     "start": {
       "welcome_back": "Привет, ${username}\n\nДобро пожаловать в Crypto Annunciator Bot",
       "bot_description": "Бот для крптоуведомлений",
-      "language_selected":"Выбран Русский язык"
+      "language_selected": "Выбран Русский язык"
     },
     "search": {
       "before_search_message": "Введите название крптоактива для поиска:",
@@ -16,15 +16,22 @@
       "main": ""
     },
     "coins": {
+      "info_count": "Количество жетонов в списке: ${count}",
+      "info_empty": "Список жетонов пуст. Для добавления используйте '› поиск'",
       "chosen_coin": "Выбранный жетон: ${coin}",
-      "list_of_coins": "Вот список твоих жетонов:",
-      "choose_coin": "Выбери один из своих жетонов"
+      "list_of_coins": "Вот список твоих жетонов:"
     },
     "detail": {
+      "buttons": {
+        "subscribe": "следить за изменением",
+        "delete": "удалить из списка"
+      },
       "price": "${ticker} цена: ${price} ${vs}",
       "price_market_cap": "${ticker} / ${vs}\n\nЦена: ${price}\nКапитализация: ${market_cap}",
       "what_next": "Чтоб делаем с выбранным жетоном?",
       "pick_notification_type": "_____",
+      "pick_limit_value": "Какое значение ждем?",
+      "subcribe_success": "Подписка добавлена успешно",
       "price_limit_up": "Лимит роста цены",
       "price_limit_down": "Лимит падения цены"
     },
@@ -51,10 +58,6 @@
   "keyboards": {
     "back_keyboard": {
       "back": "‹ назад"
-    },
-    "coin_detail_keyboard": {
-      "subscribe": "› отслеживание",
-      "delete": "› удалить из списка"
     },
     "main_keyboard": {
       "search": "› поиск",

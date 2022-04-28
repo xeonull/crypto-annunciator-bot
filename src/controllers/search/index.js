@@ -4,7 +4,7 @@ import { saveToSession, deleteFromSession } from "../../utils/session.js";
 import { coingeckoApiSearch } from "../../utils/web.js";
 import logger from "../../utils/logger.js";
 import Telegraf from "telegraf";
-import { CoinAdd, UserCoinAddFindFirst, UserCoinAdd, UserCoinRestore } from "../../../prisma/model.js";
+import { CoinAdd, UserCoinGet, UserCoinAdd, UserCoinRestore } from "../../../prisma/model.js";
 import TelegrafI18n from "telegraf-i18n";
 
 const { match } = TelegrafI18n;
@@ -47,7 +47,7 @@ search.action(/coin/, async (ctx) => {
 
       const added_coin = await CoinAdd(ctx.coin.id, ctx.coin.name, ctx.coin.symbol);
 
-      const user_coin = await UserCoinAddFindFirst(ctx.session.user_id, added_coin.id);
+      const user_coin = await UserCoinGet(ctx.session.user_id, added_coin.id);
 
       if (!user_coin) {
         await UserCoinAdd(ctx.session.user_id, added_coin.id);
