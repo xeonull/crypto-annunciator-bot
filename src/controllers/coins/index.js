@@ -20,12 +20,11 @@ coins.enter(async (ctx) => {
     const { backKeyboard } = getBackKeyboard(ctx);
     if (coins && coins.length) {
       await ctx.reply(ctx.i18n.t("scenes.coins.info_count", { count: coins.length }), backKeyboard);
+      saveToSession(ctx, "coins", coins);
+      await ctx.reply(ctx.i18n.t("scenes.coins.list_of_coins"), getCoinMenuComplex(coins, 2));
     } else {
       await ctx.reply(ctx.i18n.t("scenes.coins.info_empty"), backKeyboard);
     }
-
-    saveToSession(ctx, "coins", coins);
-    await ctx.reply(ctx.i18n.t("scenes.coins.list_of_coins"), getCoinMenuComplex(coins));
   } catch (e) {
     logger.error(ctx, "User coin list getting failed with the error: %O", e);
   }
@@ -40,11 +39,11 @@ coins.hears(match("keyboards.back_keyboard.back"), leave());
 coins.action(/coin/, exposeCoin, async (ctx) => {
   try {
     logger.debug(ctx, "User select coin %O to set action", ctx.session.coin.name);
-    await ctx.answerCbQuery();
     ctx.scene.enter("detail");
   } catch (e) {
     logger.error(ctx, "Choosing coin failed with the error: %O", e);
   }
+  await ctx.answerCbQuery();
 });
 
 coins.leave(async (ctx) => {

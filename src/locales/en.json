@@ -17,9 +17,9 @@
     },
     "coins": {
       "info_count": "Count of coins: ${count}",
-      "info_empty": "The coin list is empty. Use '› search' to add",
+      "info_empty": "Your coin list is empty\nTo add, use the search in the main menu",
       "chosen_coin": "You've chosen coin: ${coin}",
-      "list_of_coins": "This is list of your coins:"
+      "list_of_coins": "Choose one of your coins:"
     },
     "detail": {
       "buttons": {
@@ -27,9 +27,9 @@
         "delete": "delete from list"
       },
       "price": "${ticker} price: ${price} ${vs}",
-      "price_market_cap": "${ticker} / ${vs}\n\nPrice: ${price}\nCapitalization: ${market_cap}",
+      "overall_info": "${ticker} / ${vs}\n\n<b>Price</b>: ${price}\n<b>Capitalization</b>: ${market_cap}\n\n<b>Active subscriptions</b>: ${subs}",
       "what_next": "What do we do with the selected coin?",
-      "pick_notification_type": "_____",
+      "pick_notification_type": "Choose an event:",
       "pick_limit_value": "What value are we waiting for?",
       "subcribe_success": "Subscription added successfully",
       "price_limit_up": "Price growth limit",

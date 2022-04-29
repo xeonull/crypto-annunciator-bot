@@ -29,14 +29,14 @@ model User {
 }
 
 model UserCoin {
-  id         Int            @id @default(autoincrement())
-  user       User           @relation(fields: [user_id], references: [id])
-  user_id    Int
-  coin       Coin           @relation(fields: [coin_id], references: [id])
-  coin_id    Int
-  is_removed Boolean
-  updated_at DateTime       @default(now())
-  actions    Subscription[]
+  id           Int            @id @default(autoincrement())
+  user         User           @relation(fields: [user_id], references: [id])
+  user_id      Int
+  coin         Coin           @relation(fields: [coin_id], references: [id])
+  coin_id      Int
+  is_removed   Boolean
+  updated_at   DateTime       @default(now())
+  subsciptions Subscription[]
 }
 
 model NotificationType {

@@ -13,6 +13,7 @@ import searchScene from './controllers/search/index.js'
 import coinsScene from './controllers/coins/index.js'
 import detailScene from './controllers/detail/index.js'
 import settingsScene from './controllers/settings/index.js'
+import { checkActiveSubscriptions } from './utils/notifier.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -77,3 +78,6 @@ bot.hears(
 );
 
 bot.launch()
+
+checkActiveSubscriptions()
+//setInterval(checkActiveSubscriptions, 10*1000);

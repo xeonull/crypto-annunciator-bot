@@ -10,10 +10,7 @@ export const coingeckoApiPrice = async (cryptoCurrency, vsCurrency) => {
     }
     const data = await response.json();
     console.log(`Response data price: ${JSON.stringify(data)}`);
-    return {
-      price: data[cryptoCurrency][vsCurrency],
-      market_cap: data[cryptoCurrency][`${vsCurrency}_market_cap`]
-    }
+    return data
   } catch (e) {
     console.error("[coingeckoApiPrice Error]:", e);
   }

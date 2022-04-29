@@ -92,6 +92,7 @@ export async function UserCoinGet(userId, coinId) {
     return await prisma.coin.findMany({
       where: { users: { some: { user_id: userId, is_removed: false } } },
       orderBy: { name: "asc" },
+      /* Include id of UserCoin table */
       include: { users: { select: { id: true } } },
     });
   }
@@ -107,7 +108,23 @@ export async function UserCoinRestore(userCoinId) {
 export async function UserCoinRemove(userCoinId) {
   return await prisma.userCoin.update({
     where: { id: userCoinId },
-    data: { is_removed: true, updated_at: new Date() },
+    /* Mark usercoin as removed */
+    data: {
+      is_removed: true,
+      updated_at: new Date(),
+      /* Deactivate all subscriptions for usercoin */
+      subsciptions: {
+        updateMany: {
+          where: {
+            is_active: true,
+          },
+          data: {
+            is_active: false,
+            updated_at: new Date(),
+          },
+        },
+      },
+    },
   });
 }
 
@@ -131,9 +148,76 @@ export async function NotificationTypeGet(name) {
   });
 }
 
+/* Add New Subscriptions */
 export async function SubscriptionAdd(userCoinId, notificationTypeName, value, currency) {
   const notificationType = await NotificationTypeGet(notificationTypeName);
   return await prisma.subscription.create({
     data: { usercoin_id: userCoinId, notification_type_id: notificationType.id, is_active: true, limit_value: value, currency },
   });
 }
+
+/* Get Active Subscriptions for user */
+export async function SubscriptionGet(userId, userCoinId) {
+  let o = userCoinId ? { id: userCoinId } : { user_id: userId };
+  o.is_removed = false;
+
+  return await prisma.subscription.findMany({
+    where: {
+      usercoin: o,
+      is_active: true,
+    },
+    /* Include name of NotificationType */
+    include: { notification_type: { select: { name: true } } },
+  });
+}
+
+/* Get All Active Subscriptions */
+export async function SubscriptionGetAll() {
+  return await prisma.subscription.findMany({
+    where: {
+      usercoin: { is_removed: false },
+      is_active: true,
+    },
+    /* Include name of NotificationType, User TelegramID and CoinGeckoID */
+    include: {
+      notification_type: { select: { name: true } },
+      usercoin: {
+        select: {
+          user: { select: { t_id: true } },
+          coin: { select: { cg_id: true } },
+        },
+      },
+    },
+  });
+}
+
+// export async function SubscriptionGetAll() {
+//   return await prisma.coin.findMany({
+//     where: {
+//       users: {
+//         some: {
+//           is_removed: false,
+//           subsciptions: {
+//             some: {
+//               is_active: true,
+//             },
+//           },
+//         },
+//       },
+//     },
+//     /* Include name of NotificationType, User TelegramID */
+//     include: {
+//       users: {
+//         select: {
+//           id: true,
+//           user: {
+//             select: { t_id: true },
+//           },
+//           subsciptions: {
+//             select: { id: true, limit_value: true, currency: true, notification_type: { select: { name: true } } },
+//           },
+//         },
+//       },
+//     },
+//   });
+// }

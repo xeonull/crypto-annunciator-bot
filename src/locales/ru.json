@@ -17,9 +17,9 @@
     },
     "coins": {
       "info_count": "Количество жетонов в списке: ${count}",
-      "info_empty": "Список жетонов пуст. Для добавления используйте '› поиск'",
+      "info_empty": "Список жетонов пуст\nДля добавления воспользуйся поиском в главном меню",
       "chosen_coin": "Выбранный жетон: ${coin}",
-      "list_of_coins": "Вот список твоих жетонов:"
+      "list_of_coins": "Выбери один из своих жетонов:"
     },
     "detail": {
       "buttons": {
@@ -27,9 +27,9 @@
         "delete": "удалить из списка"
       },
       "price": "${ticker} цена: ${price} ${vs}",
-      "price_market_cap": "${ticker} / ${vs}\n\nЦена: ${price}\nКапитализация: ${market_cap}",
+      "overall_info": "${ticker} / ${vs}\n\n<b>Цена</b>: ${price}\n<b>Капитализация</b>: ${market_cap}\n\n<b>Активные подписки</b>: ${subs}",
       "what_next": "Чтоб делаем с выбранным жетоном?",
-      "pick_notification_type": "_____",
+      "pick_notification_type": "Выбери событие:",
       "pick_limit_value": "Какое значение ждем?",
       "subcribe_success": "Подписка добавлена успешно",
       "price_limit_up": "Лимит роста цены",
