@@ -1,0 +1,76 @@
+{
+  "scenes": {
+    "start": {
+      "welcome_back": "Привет, ${username}\n\nДобро пожаловать в Crypto Annunciator Bot",
+      "bot_description": "Бот для криптоуведомлений",
+      "language_selected": "Выбран Русский язык"
+    },
+    "search": {
+      "before_search_message": "Введи название криптоактива для поиска:",
+      "no_results_found": "Ничего не найдено",
+      "founded_results": "Результаты:",
+      "coin_added": "${coin} добавлен в твой список\n\nСимвол: ${symbol}",
+      "coin_already_added": "${coin} (${symbol}) уже имеется в списке"
+    },
+    "about": {
+      "main": ""
+    },
+    "coins": {
+      "info_count": "Количество жетонов в списке: ${count}",
+      "info_empty": "Список жетонов пуст\nДля добавления воспользуйся поиском в главном меню",
+      "chosen_coin": "Выбранный жетон: ${coin}",
+      "list_of_coins": "Выбери один из своих жетонов:"
+    },
+    "detail": {
+      "buttons": {
+        "subscribe": "следить за изменением",
+        "delete": "удалить из списка"
+      },
+      "price": "${symbol} цена: ${price} ${vs}",
+      "overall_info": "<b>${coin}</b>\n\n${symbol} / ${vs}\n<b>Цена</b>: ${price}\n<b>Капитализация</b>: ${market_cap}\n\n<b>Активные подписки</b>: ${subs}",
+      "what_next": "Чтоб делаем с выбранным жетоном?",
+      "pick_event": "Выбери событие:",
+      "pick_limit_value": "Какое значение ждем?",
+      "subcribe_success": "Подписка добавлена успешно"
+    },
+    "settings": {
+      "settings": "Настройки",
+      "selected": "Выбранный язык: <b>${language}</b>\nВыбранная валюта: <b>${currency}</b>",
+      "language": "Язык",
+      "pick_language": "Выбери язык",
+      "language_changed": "Язык был изменен на Русский",
+      "currency": "Валюта",
+      "pick_currency": "Выбери валюту",
+      "currency_changed": "Валюта была изменена на ${currency}"
+    },
+    "contact": {
+      "write_to_the_creator": "Отправь сообщение",
+      "message_delivered": "Твое сообщение было доставлено!"
+    }
+  },
+  "event": {
+    "price_limit_up": "Рост цены",
+    "price_limit_down": "Падение цены"
+  },
+  "shared": {
+    "what_next": "Что будем делать?",
+    "need_start": "Введи команду /start",
+    "not_available": "Данная функция сейчас недоступна\nПопробуй позже",
+    "something_went_wrong": "❌ Ошибка."
+  },
+  "keyboards": {
+    "back_keyboard": {
+      "back": "‹ назад"
+    },
+    "main_keyboard": {
+      "search": "› поиск",
+      "coins": "› мои жетоны",
+      "settings": "› настройки",
+      "about": "› обо мне"
+    }
+  },
+  "notify": {
+    "price_limit_up": "✔️ Текущая цена <b>${symbol}</b> к <b>${currency}</b> достигла или привысила значение <b>${value}</b>",
+    "price_limit_down": "✔️ Текущая цена <b>${symbol}</b> к <b>${currency}</b> достигла или ниже значения <b>${value}</b>"
+  }
+}

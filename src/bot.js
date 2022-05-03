@@ -1,125 +1,60 @@
-import { Bot, session } from "grammy";
-import nconf from "nconf";
-import { coingeckoApiPrice, coingeckoApiSearch } from "./web.js";
-import { GetAllCoins, AddUser, AddCoin } from "../prisma/model.js";
+import asyncWrapper from './utils/error-handlers.js'
+import { getMainKeyboard } from './utils/keyboards.js'
+import { getUserInfo } from './middlewares/user-info.js'
+import { isUserExist } from './middlewares/user-check.js'
+import startScene from './controllers/start/index.js'
+import searchScene from './controllers/search/index.js'
+import coinsScene from './controllers/coins/index.js'
+import detailScene from './controllers/detail/index.js'
+import settingsScene from './controllers/settings/index.js'
+import { checkActiveSubscriptions } from './utils/notifier.js'
+import { bot, session, Stage, i18n, match } from './telegram.js'
 
-nconf.argv().env().file({ file: "config.json" });
+const stage = new Stage([startScene, searchScene, coinsScene, detailScene, settingsScene])
 
-const bot = new Bot(nconf.get("telegramApiKey"));
+bot.use(session())
+bot.use(i18n.middleware())
+bot.use(stage.middleware())
+bot.use(getUserInfo)
 
-bot.use(
-  session({
-    initial() {
-      return { isSearch: false, searchResults: null, dbUser: null };
-    },
-  })
-);
-
-bot.api.setMyCommands([
+bot.telegram.setMyCommands([
   {
-    command: "start",
-    description: "Start",
+    command: 'start',
+    description: 'Start',
   },
-]);
+])
 
-bot.command("start", async (ctx) => {
-  ctx.session.user = await AddUser(
-    ctx.chat.id,
-    ctx.chat.username,
-    ctx.chat.first_name,
-    ctx.chat.last_name
-  );
-  ctx.session.isSearch = false;
-  const hello_text = ctx.chat.username ? `Hi, ${ctx.chat.username}. ` : ``;
-  ctx.reply(`${hello_text}Welcome to the Crypto Annunciator Bot`, {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          {
-            text: "My tickers",
-            callback_data: "callback_tickers",
-          },
-          {
-            text: "Input",
-            callback_data: "callback_search",
-          },
-        ],
-      ],
-    },
-  });
-});
+bot.start(asyncWrapper(async (ctx) => ctx.scene.enter('start')))
 
-bot.callbackQuery("callback_tickers", async (ctx) => {  
-  ctx.editMessageReplyMarkup(
-    {
-      reply_markup: {
-        inline_keyboard: [
-          [
-          ],
-        ],
-      },
-    }
-  );
+bot.hears(
+  match('keyboards.main_keyboard.search'),
+  isUserExist,
+  asyncWrapper(async (ctx) => await ctx.scene.enter('search'))
+)
 
-  const coins = await GetAllCoins();
+bot.hears(
+  match('keyboards.main_keyboard.coins'),
+  isUserExist,
+  asyncWrapper(async (ctx) => await ctx.scene.enter('coins'))
+)
 
-  const buttons = coins.map((c) => {
-    const b = {};
-    b.text = c.name;
-    b.callback_data = `cg_id_${c.cg_id}`;
-    return b;
-  });
-  const coinKeyboard = [buttons];
-  ctx.reply("Tickers:", {
-    reply_markup: {
-      inline_keyboard: coinKeyboard,
-    },
-  });
-});
+bot.hears(
+  match('keyboards.main_keyboard.settings'),
+  isUserExist,
+  asyncWrapper(async (ctx) => await ctx.scene.enter('settings'))
+)
 
-bot.callbackQuery("callback_search", (ctx) => {
-  ctx.session.isSearch = true;
-  ctx.reply(`Enter the name of the crypto asset to search:`);
-});
+bot.hears(
+  ///< (.+)/i,
+  match('keyboards.back_keyboard.back'),
+  asyncWrapper(async (ctx) => {
+    // If this method was triggered, it means that bot was updated when user was not in the main menu..
+    const { mainKeyboard } = getMainKeyboard(ctx)
+    const xx = await ctx.reply(ctx.i18n.t('shared.what_next'), mainKeyboard)
+  })
+)
 
-bot.on("message", async (ctx) => {
-  //console.log("ctx", ctx);
-  if (ctx.session.isSearch && ctx.message.text) {
-    //console.log("ctx.message:", ctx.message);
-    ctx.session.searchResults = await coingeckoApiSearch(ctx.message.text);
-    //console.log("res_coins:", res_coins);
-    const buttons = ctx.session.searchResults.map((c) => {
-      const b = {};
-      b.text = `${c.name} (${c.symbol})`;
-      b.callback_data = `cg_id_${c.id}`;
-      return b;
-    });
-    //console.log("buttons:", buttons);
-    const findKeyboard = [buttons.slice(0, 3)];
-    ctx.reply("Results:", {
-      reply_markup: {
-        inline_keyboard: findKeyboard,
-        hide_keyboard: true,
-      },
-    });
-  }
-});
+bot.launch()
 
-bot.on("callback_query:data", async (ctx) => {
-  const prefix = ctx.update.callback_query.data.substring(0, 6);
-  const coin_id = ctx.update.callback_query.data.substring(6);
-  if (prefix == "cg_id_") {
-    if (ctx.session.isSearch) {
-      const coin = ctx.session.searchResults.find((item) => item.id == coin_id);
-      console.log("coin:", coin);
-      const my_coin = await AddCoin(coin.id, coin.name, coin.symbol);
-      //AddUserCoin();
-      ctx.session.isSearch = false;
-    } else {
-      const price = await coingeckoApiPrice(coin_id);
-      ctx.reply(`Price: ${price}`);
-    }
-  }
-});
-
-bot.start();
+checkActiveSubscriptions()
+setInterval(checkActiveSubscriptions, 60 * 1000)
