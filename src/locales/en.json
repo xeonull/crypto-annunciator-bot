@@ -2,15 +2,15 @@
   "scenes": {
     "start": {
       "welcome_back": "Hi, ${username}\n\nWelcome to the Crypto Annunciator Bot",
-      "bot_description": "__its a bot for crypto notifications",
+      "bot_description": "Its a bot for crypto notifications",
       "language_selected": "selected English"
     },
     "search": {
       "before_search_message": "Enter the name of the crypto asset to search:",
       "no_results_found": "No cryptos were found",
       "founded_results": "Results:",
-      "coin_added": "${coin} added to your list\n\nTicker: ${ticker}",
-      "coin_already_added": "The ${coin} (${ticker}) already exists in the list"
+      "coin_added": "${coin} added to your list\n\nsymbol: ${symbol}",
+      "coin_already_added": "The ${coin} (${symbol}) already exists in the list"
     },
     "about": {
       "main": ""
@@ -26,14 +26,12 @@
         "subscribe": "subscibe",
         "delete": "delete from list"
       },
-      "price": "${ticker} price: ${price} ${vs}",
-      "overall_info": "${ticker} / ${vs}\n\n<b>Price</b>: ${price}\n<b>Capitalization</b>: ${market_cap}\n\n<b>Active subscriptions</b>: ${subs}",
+      "price": "${symbol} price: ${price} ${vs}",
+      "overall_info": "<b>${coin}</b>\n\n${symbol} / ${vs}\n\n<b>Price</b>: ${price}\n<b>Capitalization</b>: ${market_cap}\n\n<b>Active subscriptions</b>: ${subs}",
       "what_next": "What do we do with the selected coin?",
-      "pick_notification_type": "Choose an event:",
+      "pick_event": "Choose an event:",
       "pick_limit_value": "What value are we waiting for?",
-      "subcribe_success": "Subscription added successfully",
-      "price_limit_up": "Price growth limit",
-      "price_limit_down": "Price drop limit"
+      "subcribe_success": "Subscription added successfully"
     },
     "settings": {
       "settings": "Settings",
@@ -50,10 +48,15 @@
       "message_delivered": "Your message has been delivered!"
     }
   },
+  "event": {
+    "price_limit_up": "Price growth",
+    "price_limit_down": "Price drop"
+  },
   "shared": {
     "what_next": "What do we do?",
     "need_start": "Enter /start command",
-    "something_went_wrong": "❌ Something went wrong. Try one more time.."
+    "not_available": "Now this function is not available\nPlease, try later",
+    "something_went_wrong": "❌ Something went wrong. Try one more time."
   },
   "keyboards": {
     "back_keyboard": {
@@ -66,7 +69,8 @@
       "about": "› about"
     }
   },
-  "other": {
-    "limit_has_been_reached": ""
+  "notify": {
+    "price_limit_up": "✔️ The current price of <b>${symbol}</b> to <b>${currency}</b> has reached or exceeded the target value of <b>${value}</b>",
+    "price_limit_down": "✔️ The current price of <b>${symbol}</b> to <b>${currency}</b> has reached or dropped below the target value of <b>${value}</b>"
   }
 }

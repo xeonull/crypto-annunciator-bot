@@ -14,6 +14,7 @@ start.enter(async (ctx) => {
   if (!ctx.session.user_id) {
     const user = await UserInit(ctx.chat.id, ctx.chat.username, ctx.chat.first_name, ctx.chat.last_name, ctx.i18n.languageCode)
     saveToSession(ctx, 'user_id', user.id)
+    saveToSession(ctx, "currency", user.currency);
     logger.debug(ctx, `User has been initializated`)
   }
 

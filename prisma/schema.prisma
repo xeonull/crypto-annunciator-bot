@@ -39,7 +39,7 @@ model UserCoin {
   subsciptions Subscription[]
 }
 
-model NotificationType {
+model Event {
   id         Int            @id @default(autoincrement())
   name       String         @unique
   is_removed Boolean        @default(false)
@@ -47,13 +47,13 @@ model NotificationType {
 }
 
 model Subscription {
-  id                   Int              @id @default(autoincrement())
-  usercoin             UserCoin         @relation(fields: [usercoin_id], references: [id])
-  usercoin_id          Int
-  notification_type    NotificationType @relation(fields: [notification_type_id], references: [id])
-  notification_type_id Int
-  is_active            Boolean
-  updated_at           DateTime         @default(now())
-  limit_value          Float
-  currency             String
+  id          Int      @id @default(autoincrement())
+  usercoin    UserCoin @relation(fields: [usercoin_id], references: [id])
+  usercoin_id Int
+  event       Event    @relation(fields: [event_id], references: [id])
+  event_id    Int
+  is_active   Boolean
+  updated_at  DateTime @default(now())
+  limit_value Float
+  currency    String
 }

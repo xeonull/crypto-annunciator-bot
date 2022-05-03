@@ -1,10 +1,10 @@
-import pkg from "@prisma/client";
-const { PrismaClient } = pkg;
+import pkg from '@prisma/client'
+const { PrismaClient } = pkg
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 export async function CoinGetAll() {
-  return await prisma.coin.findMany();
+  return await prisma.coin.findMany()
 }
 
 export async function UserFindByTelegramID(telegramID) {
@@ -18,7 +18,7 @@ export async function UserFindByTelegramID(telegramID) {
       language: true,
       currency: true,
     },
-  });
+  })
 }
 
 export async function UserUpdateLanguage(userID, language) {
@@ -30,7 +30,7 @@ export async function UserUpdateLanguage(userID, language) {
       language,
       updated_at: new Date(),
     },
-  });
+  })
 }
 
 export async function UserUpdateCurrency(userID, currency) {
@@ -42,7 +42,7 @@ export async function UserUpdateCurrency(userID, currency) {
       currency,
       updated_at: new Date(),
     },
-  });
+  })
 }
 
 export async function UserInit(telegramID, userName, firstName, lastName, language) {
@@ -62,7 +62,7 @@ export async function UserInit(telegramID, userName, firstName, lastName, langua
       updated_at: new Date(),
     },
     where: { t_id: telegramID },
-  });
+  })
 }
 
 export async function CoinAdd(id, name, symbol) {
@@ -70,13 +70,13 @@ export async function CoinAdd(id, name, symbol) {
     create: { cg_id: id, name, symbol },
     update: { name, symbol },
     where: { cg_id: id },
-  });
+  })
 }
 
 export async function UserCoinAdd(userId, coinId) {
   return await prisma.userCoin.create({
     data: { user_id: userId, coin_id: coinId, is_removed: false },
-  });
+  })
 }
 
 export async function UserCoinGet(userId, coinId) {
@@ -87,14 +87,14 @@ export async function UserCoinGet(userId, coinId) {
         coin_id: coinId,
       },
       take: 1,
-    });
+    })
   } else {
     return await prisma.coin.findMany({
       where: { users: { some: { user_id: userId, is_removed: false } } },
-      orderBy: { name: "asc" },
+      orderBy: { name: 'asc' },
       /* Include id of UserCoin table */
       include: { users: { select: { id: true } } },
-    });
+    })
   }
 }
 
@@ -102,7 +102,7 @@ export async function UserCoinRestore(userCoinId) {
   return await prisma.userCoin.update({
     where: { id: userCoinId },
     data: { is_removed: false, updated_at: new Date() },
-  });
+  })
 }
 
 export async function UserCoinRemove(userCoinId) {
@@ -125,50 +125,60 @@ export async function UserCoinRemove(userCoinId) {
         },
       },
     },
-  });
+  })
 }
 
-export async function NotificationTypeAdd(name) {
-  return await prisma.notificationType.create({
-    data: { name },
-  });
+export async function EventAdd(name) {
+  return await prisma.Event.upsert({
+    create: { name },
+    update: { is_removed: false },
+    where: { name },
+  })
 }
 
-export async function NotificationTypeGetAll() {
-  return await prisma.notificationType.findMany({
+export async function EventGetAll() {
+  return await prisma.Event.findMany({
     select: { id: true, name: true, is_removed: false },
     where: { is_removed: false },
-  });
+  })
 }
 
-export async function NotificationTypeGet(name) {
-  return await prisma.notificationType.findFirst({
+export async function EventGet(name) {
+  return await prisma.Event.findFirst({
     select: { id: true, name: true, is_removed: false },
     where: { is_removed: false, name },
-  });
+  })
 }
 
 /* Add New Subscriptions */
-export async function SubscriptionAdd(userCoinId, notificationTypeName, value, currency) {
-  const notificationType = await NotificationTypeGet(notificationTypeName);
+export async function SubscriptionAdd(userCoinId, EventName, value, currency) {
+  const Event = await EventGet(EventName)
   return await prisma.subscription.create({
-    data: { usercoin_id: userCoinId, notification_type_id: notificationType.id, is_active: true, limit_value: value, currency },
-  });
+    data: { usercoin_id: userCoinId, event_id: Event.id, is_active: true, limit_value: value, currency },
+  })
+}
+
+/* Deactivate subscription */
+export async function SubscriptionDeactivate(id) {
+  return await prisma.subscription.update({
+    where: { id },
+    data: { is_active: false, updated_at: new Date() },
+  })
 }
 
 /* Get Active Subscriptions for user */
 export async function SubscriptionGet(userId, userCoinId) {
-  let o = userCoinId ? { id: userCoinId } : { user_id: userId };
-  o.is_removed = false;
+  let o = userCoinId ? { id: userCoinId } : { user_id: userId }
+  o.is_removed = false
 
   return await prisma.subscription.findMany({
     where: {
       usercoin: o,
       is_active: true,
     },
-    /* Include name of NotificationType */
-    include: { notification_type: { select: { name: true } } },
-  });
+    /* Include name of Event */
+    include: { event: { select: { name: true } } },
+  })
 }
 
 /* Get All Active Subscriptions */
@@ -178,46 +188,15 @@ export async function SubscriptionGetAll() {
       usercoin: { is_removed: false },
       is_active: true,
     },
-    /* Include name of NotificationType, User TelegramID and CoinGeckoID */
+    /* Include name of Event, User TelegramID and CoinGeckoID */
     include: {
-      notification_type: { select: { name: true } },
+      event: { select: { name: true } },
       usercoin: {
         select: {
           user: { select: { t_id: true } },
-          coin: { select: { cg_id: true } },
+          coin: { select: { cg_id: true, symbol: true } },
         },
       },
     },
-  });
+  })
 }
-
-// export async function SubscriptionGetAll() {
-//   return await prisma.coin.findMany({
-//     where: {
-//       users: {
-//         some: {
-//           is_removed: false,
-//           subsciptions: {
-//             some: {
-//               is_active: true,
-//             },
-//           },
-//         },
-//       },
-//     },
-//     /* Include name of NotificationType, User TelegramID */
-//     include: {
-//       users: {
-//         select: {
-//           id: true,
-//           user: {
-//             select: { t_id: true },
-//           },
-//           subsciptions: {
-//             select: { id: true, limit_value: true, currency: true, notification_type: { select: { name: true } } },
-//           },
-//         },
-//       },
-//     },
-//   });
-// }

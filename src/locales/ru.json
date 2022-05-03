@@ -2,15 +2,15 @@
   "scenes": {
     "start": {
       "welcome_back": "Привет, ${username}\n\nДобро пожаловать в Crypto Annunciator Bot",
-      "bot_description": "Бот для крптоуведомлений",
+      "bot_description": "Бот для криптоуведомлений",
       "language_selected": "Выбран Русский язык"
     },
     "search": {
-      "before_search_message": "Введите название крптоактива для поиска:",
+      "before_search_message": "Введи название криптоактива для поиска:",
       "no_results_found": "Ничего не найдено",
       "founded_results": "Результаты:",
-      "coin_added": "${coin} добавлен в твой список\n\nСимвол: ${ticker}",
-      "coin_already_added": "${coin} (${ticker}) уже имеется в списке"
+      "coin_added": "${coin} добавлен в твой список\n\nСимвол: ${symbol}",
+      "coin_already_added": "${coin} (${symbol}) уже имеется в списке"
     },
     "about": {
       "main": ""
@@ -26,14 +26,12 @@
         "subscribe": "следить за изменением",
         "delete": "удалить из списка"
       },
-      "price": "${ticker} цена: ${price} ${vs}",
-      "overall_info": "${ticker} / ${vs}\n\n<b>Цена</b>: ${price}\n<b>Капитализация</b>: ${market_cap}\n\n<b>Активные подписки</b>: ${subs}",
+      "price": "${symbol} цена: ${price} ${vs}",
+      "overall_info": "<b>${coin}</b>\n\n${symbol} / ${vs}\n<b>Цена</b>: ${price}\n<b>Капитализация</b>: ${market_cap}\n\n<b>Активные подписки</b>: ${subs}",
       "what_next": "Чтоб делаем с выбранным жетоном?",
-      "pick_notification_type": "Выбери событие:",
+      "pick_event": "Выбери событие:",
       "pick_limit_value": "Какое значение ждем?",
-      "subcribe_success": "Подписка добавлена успешно",
-      "price_limit_up": "Лимит роста цены",
-      "price_limit_down": "Лимит падения цены"
+      "subcribe_success": "Подписка добавлена успешно"
     },
     "settings": {
       "settings": "Настройки",
@@ -50,10 +48,15 @@
       "message_delivered": "Твое сообщение было доставлено!"
     }
   },
+  "event": {
+    "price_limit_up": "Рост цены",
+    "price_limit_down": "Падение цены"
+  },
   "shared": {
     "what_next": "Что будем делать?",
-    "need_start": "Введите команду /start",
-    "something_went_wrong": "❌ Ошибка"
+    "need_start": "Введи команду /start",
+    "not_available": "Данная функция сейчас недоступна\nПопробуй позже",
+    "something_went_wrong": "❌ Ошибка."
   },
   "keyboards": {
     "back_keyboard": {
@@ -66,7 +69,8 @@
       "about": "› обо мне"
     }
   },
-  "other": {
-    "limit_has_been_reached": ""
+  "notify": {
+    "price_limit_up": "✔️ Текущая цена <b>${symbol}</b> к <b>${currency}</b> достигла или привысила значение <b>${value}</b>",
+    "price_limit_down": "✔️ Текущая цена <b>${symbol}</b> к <b>${currency}</b> достигла или ниже значения <b>${value}</b>"
   }
 }

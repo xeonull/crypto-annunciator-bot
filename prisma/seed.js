@@ -1,20 +1,21 @@
-import { NotificationTypeAdd } from "./model.js";
+import { EventAdd } from './model.js'
+import { PRICE_LIMIT_UP, PRICE_LIMIT_DOWN } from './event.js'
 
-const notification_types = [
+const events = [
   {
     /* Growth price limit */
-    name: "price_limit_up",
+    name: PRICE_LIMIT_UP,
   },
   {
     /* Fall price limit */
-    name: "price_limit_down",
+    name: PRICE_LIMIT_DOWN,
   },
-];
+]
 
 async function main() {
-  for (const a of notification_types) {
-    await NotificationTypeAdd(a.name);
+  for (const e of events) {
+    await EventAdd(e.name)
   }
 }
 
-main();
+main()
