@@ -1,6 +1,7 @@
 import { showSettingsCurrencyMenu, showSettingsLanguageMenu, showSettingsMainMenu } from "./helpers.js";
 import { getMainKeyboard, getBackKeyboard } from "../../utils/keyboards.js";
 import { updateLanguage, updateCurrency } from "../../utils/settings.js";
+import { saveMessageForDelete, deleteSavedMessage } from "../../utils/message.js";
 import logger from "../../utils/logger.js";
 import Telegraf from "telegraf";
 import TelegrafI18n from "telegraf-i18n";
@@ -13,7 +14,8 @@ settings.enter(async (ctx) => {
   logger.debug(ctx, "Enter settings scene");
   const { backKeyboard } = getBackKeyboard(ctx);
   await ctx.reply(ctx.i18n.t("scenes.settings.settings"), backKeyboard);
-  showSettingsMainMenu(ctx);
+
+  saveMessageForDelete(ctx, await showSettingsMainMenu(ctx));
 });
 
 settings.command("saveme", leave());
@@ -51,6 +53,7 @@ settings.action(/back/, async (ctx) => {
 
 settings.leave(async (ctx) => {
   logger.debug(ctx, "Leaves settings scene");
+  deleteSavedMessage(ctx);
   const { mainKeyboard } = getMainKeyboard(ctx);
   ctx.reply(ctx.i18n.t("shared.what_next"), mainKeyboard);
 });

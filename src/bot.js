@@ -56,5 +56,5 @@ bot.hears(
 
 bot.launch()
 
-checkActiveSubscriptions()
-setInterval(checkActiveSubscriptions, 60 * 1000)
+//checkActiveSubscriptions()
+//setInterval(checkActiveSubscriptions, 60 * 1000)

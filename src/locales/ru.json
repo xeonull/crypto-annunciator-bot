@@ -7,8 +7,9 @@
     },
     "search": {
       "before_search_message": "Введи название криптоактива для поиска:",
-      "no_results_found": "Ничего не найдено",
-      "founded_results": "Результаты:",
+      "results_not_found": "Ничего не найдено",
+      "results_count": "Найдено жетонов: ${count}",
+      "results": "Результаты:",
       "coin_added": "${coin} добавлен в твой список\n\nСимвол: ${symbol}",
       "coin_already_added": "${coin} (${symbol}) уже имеется в списке"
     },
@@ -27,9 +28,11 @@
         "delete": "удалить из списка"
       },
       "price": "${symbol} цена: ${price} ${vs}",
-      "overall_info": "<b>${coin}</b>\n\n${symbol} / ${vs}\n<b>Цена</b>: ${price}\n<b>Капитализация</b>: ${market_cap}\n\n<b>Активные подписки</b>: ${subs}",
+      "coin_info": "<b>${coin}</b>\n\n${symbol} / ${vs}\n<b>Цена</b>: ${price}\n<b>Капитализация</b>: ${market_cap}",
+      "coin_subs": "<b>Активные подписки</b>: ${subs}",
       "what_next": "Чтоб делаем с выбранным жетоном?",
       "pick_event": "Выбери событие:",
+      "coin_removed": "${coin} удален из списка",
       "pick_limit_value": "Какое значение ждем?",
       "subcribe_success": "Подписка добавлена успешно"
     },

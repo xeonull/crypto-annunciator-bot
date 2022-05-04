@@ -1,6 +1,6 @@
 import { getObjectMenu, getObjectMenuComplex } from "../../utils/menus.js";
 
-export const showSettingsMainMenu = (ctx, is_edit = false) => {
+export const showSettingsMainMenu = async (ctx, is_edit = false) =>  {
   const extra = getObjectMenu(
     [
       { id: "lang", name: ctx.i18n.t("scenes.settings.language") },
@@ -9,7 +9,7 @@ export const showSettingsMainMenu = (ctx, is_edit = false) => {
     "settingSelected"
   );
   const text = ctx.i18n.t("scenes.settings.selected", { language: ctx.session.language.toUpperCase(), currency: ctx.session.currency.toUpperCase() });
-  is_edit ? ctx.editMessageText(text, extra) : ctx.reply(text, extra);
+  return is_edit ? await ctx.editMessageText(text, extra) : await ctx.reply(text, extra);
 };
 
 export const showSettingsLanguageMenu = (ctx) => {
