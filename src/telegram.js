@@ -1,6 +1,7 @@
+import 'dotenv/config' 
 import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
-import nconf from 'nconf'
+//import nconf from 'nconf'
 import Telegraf from 'telegraf'
 import TelegrafI18n from 'telegraf-i18n'
 
@@ -10,9 +11,9 @@ const __dirname = dirname(__filename)
 export const { session, Stage } = Telegraf
 export const { match } = TelegrafI18n
 
-nconf.argv().env().file({ file: 'config.json' })
-
-export const bot = new Telegraf(nconf.get('telegramApiKey'))
+//nconf.argv().env().file({ file: 'config.json' })
+//export const bot = new Telegraf(nconf.get('telegramApiKey'))
+export const bot = new Telegraf(process.env.TELEGRAM_API_KEY)
 
 export const i18n = new TelegrafI18n({
   defaultLanguage: 'en',

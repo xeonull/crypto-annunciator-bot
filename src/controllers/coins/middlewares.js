@@ -3,7 +3,7 @@ import { saveToSession } from "../../utils/session.js";
 export function exposeCoin(ctx, next) {
   const selected_coin = JSON.parse(ctx.callbackQuery.data);
   if (ctx.session.coins) {
-    saveToSession(ctx, "coin", ctx.session.coins.find((c) => c.id === selected_coin.p))
+    saveToSession(ctx, "usercoin", ctx.session.coins.find((c) => c.id === selected_coin.p))
     return next();
   }
 }

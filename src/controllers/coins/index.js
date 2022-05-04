@@ -2,6 +2,7 @@ import { getMainKeyboard, getBackKeyboard } from "../../utils/keyboards.js";
 import { exposeCoin } from "./middlewares.js";
 import { getCoinMenuComplex } from "../../utils/menus.js";
 import { saveToSession, deleteFromSession } from "../../utils/session.js";
+import { saveMessageForDelete, deleteSavedMessage } from "../../utils/message.js";
 import logger from "../../utils/logger.js";
 import { UserCoinGet } from "../../../prisma/model.js";
 import Telegraf from "telegraf";
@@ -21,16 +22,13 @@ coins.enter(async (ctx) => {
     if (coins && coins.length) {
       await ctx.reply(ctx.i18n.t("scenes.coins.info_count", { count: coins.length }), backKeyboard);
       saveToSession(ctx, "coins", coins);
-      await ctx.reply(ctx.i18n.t("scenes.coins.list_of_coins"), getCoinMenuComplex(coins, 2));
+      saveMessageForDelete(ctx, await ctx.reply(ctx.i18n.t("scenes.coins.list_of_coins"), getCoinMenuComplex(coins, 2)));
     } else {
       await ctx.reply(ctx.i18n.t("scenes.coins.info_empty"), backKeyboard);
     }
   } catch (e) {
     logger.error(ctx, "User coin list getting failed with the error: %O", e);
   }
-
-  //const message = await ctx.reply(ctx.i18n.t("scenes.coins.choose_coin"), backKeyboard);
-  //saveToSession(ctx, "del_message_id", message.message_id);
 });
 
 coins.command("saveme", leave());
@@ -38,7 +36,8 @@ coins.hears(match("keyboards.back_keyboard.back"), leave());
 
 coins.action(/coin/, exposeCoin, async (ctx) => {
   try {
-    logger.debug(ctx, "User select coin %O to set action", ctx.session.coin.name);
+    logger.debug(ctx, "User select coin %O to set action", ctx.session.usercoin.coin.name);
+    deleteSavedMessage(ctx, true)
     ctx.scene.enter("detail");
   } catch (e) {
     logger.error(ctx, "Choosing coin failed with the error: %O", e);
@@ -48,12 +47,9 @@ coins.action(/coin/, exposeCoin, async (ctx) => {
 
 coins.leave(async (ctx) => {
   logger.debug(ctx, "Leaves coins scene");
-  // if (ctx.session.del_message_id) {
-  //   ctx.deleteMessage(ctx.session.del_message_id);
-  //   deleteFromSession(ctx, "del_message_id");
-  // }
+  deleteSavedMessage(ctx, false)
   deleteFromSession(ctx, "coins");
-  if (!ctx.session.coin) {
+  if (!ctx.session.usercoin) {
     const { mainKeyboard } = getMainKeyboard(ctx);
     await ctx.reply(ctx.i18n.t("shared.what_next"), mainKeyboard);
   }

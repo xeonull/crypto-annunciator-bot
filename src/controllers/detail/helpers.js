@@ -11,7 +11,7 @@ export const showDetailMainMenu = async (ctx, text) => {
     ],
     'actionSelected'
   )
-  await ctx.editMessageText(text, extra)
+  return await ctx.reply(text, extra)
 }
 
 export const showSubsMenu = async (ctx, is_edit = false) => {

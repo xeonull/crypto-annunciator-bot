@@ -18,7 +18,7 @@ export function getCoinMenuComplex(obj, col_count = 3) {
     let prev = 0;
     for (let index = 1; index <= obj.length; index++) {
       if (index % col_count === 0 || index === obj.length) {
-        matrix.push(obj.slice(prev, index).map((o) => m.callbackButton(`${o.name} (${o.symbol})`, JSON.stringify({ a: 'coin', p: o.id }), false)));
+        matrix.push(obj.slice(prev, index).map((o) => m.callbackButton(`${o.coin.name} (${o.coin.symbol})`, JSON.stringify({ a: 'coin', p: o.id }), false)));
         prev = index;
       }
     }

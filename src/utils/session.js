@@ -1,22 +1,13 @@
-import logger from './logger.js';
+import logger from "./logger.js";
 
-/**
- * Saving data to the session
- * @param ctx - telegram context
- * @param field - field to store in
- * @param data - data to store
- */
+/* Saving data to the session */
 export function saveToSession(ctx, field, data) {
-  logger.debug(ctx, 'Saving %s to session', field);
+  logger.debug(ctx, "Saving %s to session", field);
   ctx.session[field] = data;
 }
 
-/**
- * Removing data from the session
- * @param ctx - telegram context
- * @param field - field to delete
- */
+/* Removing data from the session */
 export function deleteFromSession(ctx, field) {
-  logger.debug(ctx, 'Deleting %s from session', field);
+  logger.debug(ctx, "Deleting %s from session", field);
   delete ctx.session[field];
 }
