@@ -1,5 +1,5 @@
-import pkg from 'telegraf'
-const { Markup } = pkg
+import tgf from 'telegraf'
+const { Markup } = tgf
 
 /* Returns back keyboard and its buttons according to the language */
 export const getBackKeyboard = (ctx) => {

@@ -2,14 +2,14 @@
   "scenes": {
     "start": {
       "welcome_back": "Привет, ${username}\n\nДобро пожаловать в Crypto Annunciator Bot",
-      "bot_description": "Бот для криптоуведомлений",
+      "bot_description": "Бот для уведомлений об изменениях цены твоих криптоактивов",
       "language_selected": "Выбран Русский язык"
     },
     "search": {
       "before_search_message": "Введи название криптоактива для поиска:",
       "results_not_found": "Ничего не найдено",
       "results_count": "Найдено жетонов: ${count}",
-      "results": "Результаты:",
+      "results": "Результаты${page}:",
       "coin_added": "${coin} добавлен в твой список\n\nСимвол: ${symbol}",
       "coin_already_added": "${coin} (${symbol}) уже имеется в списке"
     },
@@ -20,12 +20,13 @@
       "info_count": "Количество жетонов в списке: ${count}",
       "info_empty": "Список жетонов пуст\nДля добавления воспользуйся поиском в главном меню",
       "chosen_coin": "Выбранный жетон: ${coin}",
-      "list_of_coins": "Выбери один из своих жетонов:"
+      "list_of_coins": "Выбери один из своих жетонов:${page}"
     },
     "detail": {
       "buttons": {
-        "subscribe": "следить за изменением",
-        "delete": "удалить из списка"
+        "subscribe": "подписаться на изменения цены",
+        "unsubscribe": "отписаться",
+        "delete": "удалить жетон из списка"
       },
       "price": "${symbol} цена: ${price} ${vs}",
       "coin_info": "<b>${coin}</b>\n\n${symbol} / ${vs}\n<b>Цена</b>: ${price}\n<b>Капитализация</b>: ${market_cap}",
@@ -34,7 +35,8 @@
       "pick_event": "Выбери событие:",
       "coin_removed": "${coin} удален из списка",
       "pick_limit_value": "Какое значение ждем?",
-      "subcribe_success": "Подписка добавлена успешно"
+      "subcribe_success": "Подписка добавлена успешно",
+      "unsubcribe_success": "Активные подписки отменены для ${coin}"
     },
     "settings": {
       "settings": "Настройки",
@@ -59,7 +61,7 @@
     "what_next": "Что будем делать?",
     "need_start": "Введи команду /start",
     "not_available": "Данная функция сейчас недоступна\nПопробуй позже",
-    "something_went_wrong": "❌ Ошибка."
+    "something_went_wrong": "❌ Что-то пошло не так. Попробуй еще раз."
   },
   "keyboards": {
     "back_keyboard": {

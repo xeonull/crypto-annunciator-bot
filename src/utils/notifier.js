@@ -19,20 +19,15 @@ export async function checkActiveSubscriptions() {
 
     const data = await coingeckoApiPriceData(Object.keys(cryptos).join(','), Object.keys(currencies).join(','))
 
-    //logger.debug(undefined, 'data:: %o', data)
-    //logger.debug(undefined, 'aSub:: %o', activeSubscriptions)
-
     for (const sub of activeSubscriptions) {
       switch (sub.event.name) {
         case PRICE_LIMIT_UP:
           if (sub.limit_value <= data[sub.usercoin.coin.cg_id][sub.currency])
             notifyUser(sub.id, sub.usercoin.user.t_id, sub.usercoin.coin.symbol, sub.currency, sub.event.name, sub.limit_value)
-          //else logger.debug(undefined, `${sub.limit_value} > ${data[sub.usercoin.coin.cg_id][sub.currency]}`)
           break
         case PRICE_LIMIT_DOWN:
           if (sub.limit_value >= data[sub.usercoin.coin.cg_id][sub.currency])
             notifyUser(sub.id, sub.usercoin.user.t_id, sub.usercoin.coin.symbol, sub.currency, sub.event.name, sub.limit_value)
-          //else logger.debug(undefined, `${sub.limit_value} < ${data[sub.usercoin.coin.cg_id][sub.currency]}`)
           break
       }
     }

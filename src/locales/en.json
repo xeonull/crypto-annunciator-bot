@@ -2,14 +2,14 @@
   "scenes": {
     "start": {
       "welcome_back": "Hi, ${username}\n\nWelcome to the Crypto Annunciator Bot",
-      "bot_description": "Its a bot for crypto notifications",
+      "bot_description": "Bot for notifications about changes in the price of your cryptoassets",
       "language_selected": "selected English"
     },
     "search": {
       "before_search_message": "Enter the name of the crypto asset to search:",
       "results_not_found": "No cryptos were found",
       "results_count": "Found coins: ${count}",
-      "results": "Results:",
+      "results": "Results${page}:",
       "coin_added": "${coin} added to your list\n\nsymbol: ${symbol}",
       "coin_already_added": "The ${coin} (${symbol}) already exists in the list"
     },
@@ -20,12 +20,13 @@
       "info_count": "Count of coins: ${count}",
       "info_empty": "Your coin list is empty\nUse search in the main menu to add",
       "chosen_coin": "You've chosen coin: ${coin}",
-      "list_of_coins": "Choose one of your coins:"
+      "list_of_coins": "Choose one of your coins:${page}"
     },
     "detail": {
       "buttons": {
-        "subscribe": "subscibe",
-        "delete": "delete from list"
+        "subscribe": "subscribe to price changes",
+        "unsubscribe": "unsubscribe",
+        "delete": "delete coin from list"
       },
       "price": "${symbol} price: ${price} ${vs}",
       "coin_info": "<b>${coin}</b>\n\n${symbol} / ${vs}\n\n<b>Price</b>: ${price}\n<b>Capitalization</b>: ${market_cap}",
@@ -34,7 +35,8 @@
       "pick_event": "Choose an event:",
       "coin_removed": "${coin} removed from your list",
       "pick_limit_value": "What value are we waiting for?",
-      "subcribe_success": "Subscription added successfully"
+      "subcribe_success": "Subscription added successfully",
+      "unsubcribe_success": "Active subscriptions removed for ${coin}"
     },
     "settings": {
       "settings": "Settings",

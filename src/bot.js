@@ -45,16 +45,15 @@ bot.hears(
 )
 
 bot.hears(
-  ///< (.+)/i,
   match('keyboards.back_keyboard.back'),
   asyncWrapper(async (ctx) => {
     // If this method was triggered, it means that bot was updated when user was not in the main menu..
     const { mainKeyboard } = getMainKeyboard(ctx)
-    const xx = await ctx.reply(ctx.i18n.t('shared.what_next'), mainKeyboard)
+    await ctx.reply(ctx.i18n.t('shared.what_next'), mainKeyboard)
   })
 )
 
 bot.launch()
 
-//checkActiveSubscriptions()
-//setInterval(checkActiveSubscriptions, 60 * 1000)
+checkActiveSubscriptions()
+setInterval(checkActiveSubscriptions, 60 * 1000)

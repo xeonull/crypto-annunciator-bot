@@ -1,6 +1,6 @@
 import logger from './logger.js';
 
-//Wrapper to catch async errors within a stage. Helps to avoid try catch blocks in there
+/* Wrapper to catch async errors within a stage. Helps to avoid try catch blocks in there */
 const asyncWrapper = (fn) => {
   return async function(ctx, next) {
     try {

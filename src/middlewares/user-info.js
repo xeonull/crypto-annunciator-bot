@@ -1,5 +1,4 @@
 import { UserFindByTelegramID } from "../../prisma/model.js";
-import logger from "../utils/logger.js";
 import { saveToSession } from ".././utils/session.js";
 import { updateLanguage } from "../utils/settings.js";
 

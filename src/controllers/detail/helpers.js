@@ -1,15 +1,17 @@
-import pkg from 'telegraf'
-const { Markup } = pkg
+import tgf from 'telegraf'
+const { Markup } = tgf
 import { getObjectMenu, getObjectMenuComplex } from '../../utils/menus.js'
 import { EventGetAll } from '../../../prisma/model.js'
 
 export const showDetailMainMenu = async (ctx, text) => {
-  const extra = getObjectMenu(
+  const extra = getObjectMenuComplex(
     [
       { id: 'sub', name: ctx.i18n.t('scenes.detail.buttons.subscribe') },
+      { id: 'unsub', name: ctx.i18n.t('scenes.detail.buttons.unsubscribe') },
       { id: 'del', name: ctx.i18n.t('scenes.detail.buttons.delete') },
     ],
-    'actionSelected'
+    'actionSelected',
+    2
   )
   return await ctx.reply(text, extra)
 }

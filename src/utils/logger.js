@@ -1,12 +1,7 @@
 import util from 'util';
 import winston, { format } from 'winston';
 
-/**
- * Adds user id and nickname if found. Also formats message to display complex objects
- * @param ctx - telegram context
- * @param msg  - message
- * @param data - object to log
- */
+/* Adds user id and nickname if found. Also formats message to display complex objects */
 function prepareMessage(ctx, msg, ...data) {
   const formattedMessage = data.length ? util.format(msg, ...data) : msg;
 
