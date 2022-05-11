@@ -1,5 +1,3 @@
-import tgf from 'telegraf'
-const { Markup } = tgf
 import { getObjectMenu, getObjectMenuComplex } from '../../utils/menus.js'
 import { EventGetAll } from '../../../prisma/model.js'
 
@@ -30,19 +28,3 @@ export const showSubsMenu = async (ctx, is_edit = false) => {
   is_edit ? ctx.editMessageText(text, extra) : ctx.reply(text, extra)
 }
 
-/* Returns back keyboard and its buttons according to the language */
-export const getCoinControlKeyboard = (ctx) => {
-  const coinKeyboardSubscribe = ctx.i18n.t('keyboards.coin_detail_keyboard.subscribe')
-  const coinKeyboardDelete = ctx.i18n.t('keyboards.coin_detail_keyboard.delete')
-  const coinKeyboardBack = ctx.i18n.t('keyboards.back_keyboard.back')
-  let coinKeyboard = Markup.keyboard([[coinKeyboardSubscribe, coinKeyboardDelete], [coinKeyboardBack]])
-
-  coinKeyboard = coinKeyboard.resize().extra()
-
-  return {
-    coinKeyboard,
-    coinKeyboardSubscribe,
-    coinKeyboardDelete,
-    coinKeyboardBack,
-  }
-}

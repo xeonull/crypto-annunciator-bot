@@ -19,10 +19,10 @@ export const getMainKeyboard = (ctx) => {
   const mainKeyboardSearch = ctx.i18n.t('keyboards.main_keyboard.search')
   const mainKeyboardMyCoins = ctx.i18n.t('keyboards.main_keyboard.coins')
   const mainKeyboardSettings = ctx.i18n.t('keyboards.main_keyboard.settings')
-  const mainKeyboardAbout = ctx.i18n.t('keyboards.main_keyboard.about')
+  const mainKeyboardContact = ctx.i18n.t('keyboards.main_keyboard.contact')
   let mainKeyboard = Markup.keyboard([
     [mainKeyboardSearch, mainKeyboardMyCoins],
-    [mainKeyboardSettings, mainKeyboardAbout],
+    [mainKeyboardSettings, mainKeyboardContact],
   ])
   mainKeyboard = mainKeyboard.resize().extra()
 
@@ -31,6 +31,6 @@ export const getMainKeyboard = (ctx) => {
     mainKeyboardSearch,
     mainKeyboardMyCoins,
     mainKeyboardSettings,
-    mainKeyboardAbout,
+    mainKeyboardContact,
   }
 }

@@ -5,7 +5,8 @@
   "main": "src/bot.js",
   "type": "module",
   "scripts": {
-    "dev": "node src/bot.js"
+    "dev": "node src/bot.js",
+    "start": "NODE_ENV=production node src/bot.js"
   },
   "dependencies": {
     "@prisma/client": "^3.13.0",

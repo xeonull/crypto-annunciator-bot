@@ -13,9 +13,6 @@
       "coin_added": "${coin} added to your list\n\nsymbol: ${symbol}",
       "coin_already_added": "The ${coin} (${symbol}) already exists in the list"
     },
-    "about": {
-      "main": ""
-    },
     "coins": {
       "info_count": "Count of coins: ${count}",
       "info_empty": "Your coin list is empty\nUse search in the main menu to add",
@@ -24,7 +21,7 @@
     },
     "detail": {
       "buttons": {
-        "subscribe": "subscribe to price changes",
+        "subscribe": "subscribe",
         "unsubscribe": "unsubscribe",
         "delete": "delete coin from list"
       },
@@ -49,7 +46,7 @@
       "currency_changed": "Currency has been changed to ${currency}"
     },
     "contact": {
-      "write_to_the_creator": "Leave a message",
+      "write_to_admin": "Leave a message to administrator",
       "message_delivered": "Your message has been delivered!"
     }
   },
@@ -71,7 +68,7 @@
       "search": "› search",
       "coins": "› my coins",
       "settings": "› settings",
-      "about": "› about"
+      "contact": "› contacts"
     }
   },
   "notify": {
