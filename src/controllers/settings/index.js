@@ -18,32 +18,47 @@ settings.enter(async (ctx) => {
   saveMessageForDelete(ctx, await showSettingsMainMenu(ctx));
 });
 
-settings.command("saveme", leave());
+settings.command("reset", leave());
 settings.hears(match("keyboards.back_keyboard.back"), leave());
 
 settings.action(/settingSelected/, async (ctx) => {
-  const data = JSON.parse(ctx.callbackQuery.data);
-  await ctx.answerCbQuery();
-  if (data.p == "lang") showSettingsLanguageMenu(ctx);
-  else if (data.p == "curr") showSettingsCurrencyMenu(ctx);
+  try {
+    const data = JSON.parse(ctx.callbackQuery.data);
+    await ctx.answerCbQuery();
+    if (data.p == "lang") showSettingsLanguageMenu(ctx);
+    else if (data.p == "curr") showSettingsCurrencyMenu(ctx);
+  } catch (e) {
+    logger.error(ctx, "Selected setting failed with the error: %O", e);
+    await ctx.reply(ctx.i18n.t("shared.something_went_wrong"));
+  }
 });
 
 settings.action(/languageSelected/, async (ctx) => {
-  const langData = JSON.parse(ctx.callbackQuery.data);
-  await updateLanguage(ctx, langData.p);
-  await ctx.answerCbQuery();
-  const { backKeyboard } = getBackKeyboard(ctx);
-  await ctx.reply(ctx.i18n.t("scenes.settings.language_changed"), backKeyboard);
-  showSettingsMainMenu(ctx, true);
+  try {
+    const langData = JSON.parse(ctx.callbackQuery.data);
+    await updateLanguage(ctx, langData.p);
+    await ctx.answerCbQuery();
+    const { backKeyboard } = getBackKeyboard(ctx);
+    await ctx.reply(ctx.i18n.t("scenes.settings.language_changed"), backKeyboard);
+    showSettingsMainMenu(ctx, true);
+  } catch (e) {
+    logger.error(ctx, "Updating language failed with the error: %O", e);
+    await ctx.reply(ctx.i18n.t("shared.something_went_wrong"));
+  }
 });
 
 settings.action(/currencySelected/, async (ctx) => {
-  const langData = JSON.parse(ctx.callbackQuery.data);
-  await updateCurrency(ctx, langData.p);
-  await ctx.answerCbQuery();
-  const { backKeyboard } = getBackKeyboard(ctx);
-  await ctx.reply(ctx.i18n.t("scenes.settings.currency_changed", { currency: ctx.session.currency.toUpperCase() }), backKeyboard);
-  showSettingsMainMenu(ctx, true);
+  try {
+    const langData = JSON.parse(ctx.callbackQuery.data);
+    await updateCurrency(ctx, langData.p);
+    await ctx.answerCbQuery();
+    const { backKeyboard } = getBackKeyboard(ctx);
+    await ctx.reply(ctx.i18n.t("scenes.settings.currency_changed", { currency: ctx.session.currency.toUpperCase() }), backKeyboard);
+    showSettingsMainMenu(ctx, true);
+  } catch (e) {
+    logger.error(ctx, "Updating currency failed with the error: %O", e);
+    await ctx.reply(ctx.i18n.t("shared.something_went_wrong"));
+  }
 });
 
 settings.action(/back/, async (ctx) => {

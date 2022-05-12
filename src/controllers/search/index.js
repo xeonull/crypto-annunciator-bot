@@ -18,7 +18,7 @@ search.enter(async (ctx) => {
   await ctx.replyWithHTML(ctx.i18n.t('scenes.search.before_search_message'), backKeyboard)
 })
 
-search.command('saveme', leave())
+search.command('reset', leave())
 search.hears(match('keyboards.back_keyboard.back'), leave())
 
 search.on('text', async (ctx) => {

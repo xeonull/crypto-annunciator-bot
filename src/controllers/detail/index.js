@@ -57,7 +57,7 @@ detail.enter(async (ctx) => {
   }
 })
 
-detail.command('saveme', leave())
+detail.command('reset', leave())
 detail.hears(match('keyboards.back_keyboard.back'), (ctx) => {
   ctx.scene.enter('coins')
 })

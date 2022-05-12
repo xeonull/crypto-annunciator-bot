@@ -23,7 +23,16 @@ bot.telegram.setMyCommands([
     command: "start",
     description: "Start",
   },
+  {
+    command: "reset",
+    description: "Reset",
+  },
 ]);
+
+bot.command('reset', async (ctx) => {
+  const { mainKeyboard } = getMainKeyboard(ctx);
+  await ctx.reply(ctx.i18n.t("shared.what_next"), mainKeyboard);
+});
 
 bot.start(asyncWrapper(async (ctx) => ctx.scene.enter("start")));
 
@@ -61,13 +70,6 @@ bot.hears(
 );
 
 bot.launch()
-// console.log("env::", process.env.NODE_ENV);
-
-// await bot.telegram.setWebhook(`https://crypto-annunciator-bot-xeonull.vercel.app:8443/${process.env.TELEGRAM_API_KEY}`);
-// bot.startWebhook(`/${process.env.TELEGRAM_API_KEY}`, null, 8443);
-
-// const webhookStatus = await bot.telegram.getWebhookInfo();
-// console.log("Webhook status", webhookStatus);
 
 checkActiveSubscriptions();
 setInterval(checkActiveSubscriptions, 60 * 1000);

@@ -27,7 +27,7 @@ coins.enter(async (ctx) => {
   }
 })
 
-coins.command('saveme', leave())
+coins.command('reset', leave())
 coins.hears(match('keyboards.back_keyboard.back'), leave())
 
 coins.action(/coin_next/, async (ctx) => {

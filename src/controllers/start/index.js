@@ -25,7 +25,7 @@ start.enter(async (ctx) => {
   }
 })
 
-start.command('saveme', leave())
+start.command('reset', leave())
 
 start.action(/languageChange/, async (ctx) => {
   try {
