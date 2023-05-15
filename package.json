@@ -1,24 +1,22 @@
 {
   "name": "crypto-annunciator-bot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "src/bot.js",
   "type": "module",
   "scripts": {
-    "dev": "node src/bot.js",
-    "start": "NODE_ENV=production node src/bot.js"
+    "start": "node src/bot.js"
   },
   "dependencies": {
-    "@prisma/client": "^3.13.0",
-    "dotenv": "^16.0.0",
-    "nconf": "^0.11.3",
-    "node-fetch": "^3.2.3",
+    "@prisma/client": "^4.0.0",
+    "dotenv": "^16.0.3",
+    "node-fetch": "^3.3.1",
     "telegraf": "^3.39.0",
     "telegraf-i18n": "^6.6.0",
-    "winston": "^3.7.2"
+    "winston": "^3.8.2"
   },
   "devDependencies": {
-    "prisma": "^3.13.0"
+    "prisma": "^4.0.0"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
