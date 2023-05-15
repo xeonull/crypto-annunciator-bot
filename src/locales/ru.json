@@ -73,7 +73,7 @@
     }
   },
   "notify": {
-    "price_limit_up": "✔️ Текущая цена <b>${symbol}</b> к <b>${currency}</b> достигла или привысила значение <b>${value}</b>",
+    "price_limit_up": "✔️ Текущая цена <b>${symbol}</b> к <b>${currency}</b> достигла или превысила значение <b>${value}</b>",
     "price_limit_down": "✔️ Текущая цена <b>${symbol}</b> к <b>${currency}</b> достигла или ниже значения <b>${value}</b>"
   }
 }
