@@ -100,12 +100,16 @@ detail.action(/EventSelected/, async (ctx) => {
   await ctx.answerCbQuery()
 })
 
-detail.hears(/^[0-9]+[\.\,0-9]+$/, async (ctx) => {
+detail.hears(/^[0-9]+[\.\,0-9]*$/, async (ctx) => {
   if (ctx.session.subscibe_to) {
     const value = parseFloat(ctx.message.text.replace(/,/, '.'))
     await SubscriptionAdd(ctx.session.usercoin.id, ctx.session.subscibe_to, value, ctx.session.currency)
     await ctx.reply(ctx.i18n.t('scenes.detail.subcribe_success'))
   }
+})
+
+detail.hears(/^.+$/, async (ctx) => {
+    await ctx.reply(ctx.i18n.t('scenes.detail.incorrect_value'))
 })
 
 detail.leave(async (ctx) => {

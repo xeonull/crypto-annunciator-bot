@@ -32,6 +32,7 @@
       "pick_event": "Choose an event:",
       "coin_removed": "${coin} removed from your list",
       "pick_limit_value": "What value are we waiting for?",
+      "incorrect_value": "This value does not fit\nEnter any positive number",
       "subcribe_success": "Subscription added successfully",
       "unsubcribe_success": "Active subscriptions removed for ${coin}"
     },
