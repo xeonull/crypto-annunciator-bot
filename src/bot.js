@@ -29,7 +29,7 @@ bot.telegram.setMyCommands([
   },
 ]);
 
-bot.command('reset', async (ctx) => {
+bot.command("reset", async (ctx) => {
   const { mainKeyboard } = getMainKeyboard(ctx);
   await ctx.reply(ctx.i18n.t("shared.what_next"), mainKeyboard);
 });
@@ -69,7 +69,23 @@ bot.hears(
   })
 );
 
-bot.launch()
+if (process.env.NODE_ENV == "production") {
+  // if production use Webhooks
+  bot
+    .launch({
+      webhook: {
+        domain: process.env.DOMAIN,
+        port: process.env.PORT || 8000,
+      },
+    })
+    .then(() => {
+      console.info(`The ${bot.context.botInfo.first_name} is running on server`);
+    });
+} else {
+  // if local use Long-polling
+  bot.launch().then(() => {
+    console.info(`The ${bot.context.botInfo.first_name} is running locally`);
+  });
+}
 
-checkActiveSubscriptions();
-setInterval(checkActiveSubscriptions, 60 * 1000);
+setInterval(checkActiveSubscriptions, 333 * 1000);
